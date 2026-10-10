@@ -20,7 +20,7 @@ export const envConfigs: Record<string, string> = {
   app_description: publicEnv('VITE_APP_DESCRIPTION') ?? 'AddressGen',
   app_logo: publicEnv('VITE_APP_LOGO') ?? '/logo.svg',
   // 默认主题可由公开环境变量覆盖；已保存的用户选择优先。
-  default_theme: publicEnv('VITE_DEFAULT_THEME') ?? 'dark',
+  default_theme: publicEnv('VITE_DEFAULT_THEME') ?? 'light',
 
   // Analytics (public)
   google_analytics_id: procEnv.GOOGLE_ANALYTICS_ID ?? 'G-231WJ9Z737',

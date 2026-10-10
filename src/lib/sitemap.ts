@@ -1,4 +1,3 @@
-import { countries } from "@/config/geography";
 import { localeMeta } from "@/config/locale";
 import { absoluteSiteUrl } from "@/lib/seo";
 import { baseLocale, locales, localizeHref } from "@/paraglide/runtime.js";
@@ -6,8 +5,6 @@ import { baseLocale, locales, localizeHref } from "@/paraglide/runtime.js";
 /** 仅收录已上线的公开页面；国家路径与目录共用，排除 API 和未知 slug。 */
 const publicPaths = [
 	"/",
-	"/us-tax-free-address-generator",
-	...countries.map((country) => country.path),
 	"/privacy",
 	"/about",
 	"/terms",

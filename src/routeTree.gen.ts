@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]webmanifest'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as marketinglegalRouteRouteImport } from './routes/(marketing)/(legal)/route'
 import { Route as marketinglegalAboutIndexRouteImport } from './routes/(marketing)/(legal)/about/index'
 import { Route as marketinglegalPrivacyIndexRouteImport } from './routes/(marketing)/(legal)/privacy/index'
@@ -21,9 +24,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ManifestDotwebmanifestRoute = ManifestDotwebmanifestRouteImport.update({
   id: '/manifest.webmanifest',
   path: '/manifest.webmanifest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const marketinglegalRouteRoute = marketinglegalRouteRouteImport.update({
@@ -51,14 +69,20 @@ const marketinglegalTermsIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about/': typeof marketinglegalAboutIndexRoute
   '/privacy/': typeof marketinglegalPrivacyIndexRoute
   '/terms/': typeof marketinglegalTermsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about': typeof marketinglegalAboutIndexRoute
   '/privacy': typeof marketinglegalPrivacyIndexRoute
   '/terms': typeof marketinglegalTermsIndexRoute
@@ -66,7 +90,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/(marketing)/(legal)': typeof marketinglegalRouteRouteWithChildren
   '/(marketing)/(legal)/about/': typeof marketinglegalAboutIndexRoute
   '/(marketing)/(legal)/privacy/': typeof marketinglegalPrivacyIndexRoute
@@ -74,13 +101,32 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/manifest.webmanifest' | '/about/' | '/privacy/' | '/terms/'
+  fullPaths:
+    | '/'
+    | '/llms.txt'
+    | '/manifest.webmanifest'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/about/'
+    | '/privacy/'
+    | '/terms/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/manifest.webmanifest' | '/about' | '/privacy' | '/terms'
+  to:
+    | '/'
+    | '/llms.txt'
+    | '/manifest.webmanifest'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/about'
+    | '/privacy'
+    | '/terms'
   id:
     | '__root__'
     | '/'
+    | '/llms.txt'
     | '/manifest.webmanifest'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/(marketing)/(legal)'
     | '/(marketing)/(legal)/about/'
     | '/(marketing)/(legal)/privacy/'
@@ -89,7 +135,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
   ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   marketinglegalRouteRoute: typeof marketinglegalRouteRouteWithChildren
 }
 
@@ -102,11 +151,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/manifest.webmanifest': {
       id: '/manifest.webmanifest'
       path: '/manifest.webmanifest'
       fullPath: '/manifest.webmanifest'
       preLoaderRoute: typeof ManifestDotwebmanifestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(marketing)/(legal)': {
@@ -157,7 +227,10 @@ const marketinglegalRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
   ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   marketinglegalRouteRoute: marketinglegalRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport

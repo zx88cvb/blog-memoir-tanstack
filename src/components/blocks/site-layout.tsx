@@ -1,0 +1,62 @@
+import type { ReactNode } from "react";
+import { envConfigs } from "@/config";
+import { m } from "@/paraglide/messages.js";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { LocaleSelector } from "@/components/locale-selector";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+export function SiteLayout({ children }: { children: ReactNode }) {
+	return (
+		<div className="isolate flex min-h-svh flex-col before:pointer-events-none before:fixed before:inset-0 before:-z-10 before:bg-[radial-gradient(ellipse_360px_360px_at_0%_0%,var(--glow-one),transparent_80%),radial-gradient(ellipse_360px_360px_at_100%_60%,var(--glow-two),transparent_80%)] before:content-['']">
+			<a
+				className="fixed top-4 left-4 z-100 -translate-y-[200%] rounded-lg bg-surface p-3 focus:translate-y-0"
+				href="#main-content"
+			>
+				{m["common.skip_content"]()}
+			</a>
+			<Header
+				name={envConfigs.app_name}
+				navigationLabel={m["common.nav.label"]()}
+				menuLabel={m["common.nav.open_menu"]()}
+				closeMenuLabel={m["common.nav.close_menu"]()}
+				navigation={[
+					{ label: m["common.nav.home"](), href: "/" },
+					{
+						label: m["common.nav.tax_free"](),
+						href: "/us-tax-free-address-generator",
+					},
+					{ label: m["common.nav.us_address"](), href: "/region/us-address" },
+					{ label: m["common.nav.jp_address"](), href: "/region/jp-address" },
+				]}
+				actions={
+					<>
+						<LocaleSelector />
+						{/* <ThemeToggle label={m["common.theme.toggle"]()} /> */}
+					</>
+				}
+			/>
+			<div className="flex-1">{children}</div>
+			<Footer
+				name={envConfigs.app_name}
+				year={new Date().getFullYear()}
+				copyright={m["common.copyright"]()}
+				actions={
+					<>
+						<ThemeToggle label={m["common.theme.toggle"]()} />
+					</>
+				}
+				groups={[
+					{
+						title: m["common.footer.legal"](),
+						items: [
+							{ label: m["common.footer.privacy"](), href: "/privacy" },
+							{ label: m["common.footer.terms"](), href: "/terms" },
+							{ label: m["common.footer.about"](), href: "/about" },
+						],
+					},
+				]}
+			/>
+		</div>
+	);
+}

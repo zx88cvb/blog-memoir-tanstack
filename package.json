@@ -13,7 +13,9 @@
     "format": "biome format",
     "lint": "biome lint",
     "i18n:generate": "paraglide-js compile --project ./project.inlang",
-    "check": "biome check"
+    "check": "biome check",
+    "check:i18n": "inlang check --project ./project.inlang",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -50,7 +52,8 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^6.0.2",
-    "vite": "^8.0.0"
+    "vite": "^8.0.0",
+    "@inlang/cli": "^3.4.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

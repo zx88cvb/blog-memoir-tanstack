@@ -21,13 +21,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 				menuLabel={m["common.nav.open_menu"]()}
 				closeMenuLabel={m["common.nav.close_menu"]()}
 				navigation={[
-					{ label: m["common.nav.home"](), href: "/" },
-					{
-						label: m["common.nav.tax_free"](),
-						href: "/us-tax-free-address-generator",
-					},
-					{ label: m["common.nav.us_address"](), href: "/region/us-address" },
-					{ label: m["common.nav.jp_address"](), href: "/region/jp-address" },
+					{ label: m["common.nav.home"](), href: "/" }
 				]}
 				actions={
 					<>

@@ -13,33 +13,23 @@ const languageNames = {
 const pages = [
 	{
 		path: "/",
-		name: "Address generator",
-		description: "Generate sample addresses and contact profiles for the available countries and regions.",
+		name: "TanStack Template",
+		description: "A web application template built with TanStack Start, React, and TypeScript.",
 	},
 	{
-		path: "/region/us-address",
-		name: "US address generator",
-		description: "Choose Random or one of all 50 US states for sample addresses with ZIP codes and simulated contact details.",
-	},
-	{
-		path: "/region/jp-address",
-		name: "Japan address generator",
-		description: "Choose Random or one of all 47 Japanese prefectures for matched area and postal-code data with simulated building numbers and contact details.",
-	},
-	{
-		path: "/us-tax-free-address-generator",
-		name: "US tax-free state address generator",
-		description: "Create test address samples for Delaware, Oregon, Alaska, Montana and New Hampshire; an address does not establish tax eligibility.",
+		path: "/about",
+		name: "About",
+		description: "The template's routing, data fetching, localization, themes, and customization options.",
 	},
 	{
 		path: "/privacy",
 		name: "Privacy policy",
-		description: "How generation requests, browser preferences, technical information and support messages are handled.",
+		description: "Example privacy content for the website operator to adapt to actual data practices.",
 	},
 	{
 		path: "/terms",
 		name: "Terms of service",
-		description: "Permitted uses, sample-data limitations, automated access and service availability.",
+		description: "Example terms for the website operator to adapt to the deployed service.",
 	},
 ] as const;
 
@@ -51,13 +41,11 @@ export const Route = createFileRoute("/llms.txt")({
 				const body = [
 					`# ${envConfigs.app_name}`,
 					"",
-					"> A free address generator for US and Japanese sample addresses and simulated contact profiles. No signup is required.",
+					"> A web application template built with TanStack Start, React, and TypeScript.",
 					"",
-					"Use the samples for testing, software development, education and demonstrations. The tools support all 50 US states, all 47 Japanese prefectures, and a dedicated selection of five US tax-free states: Delaware, Oregon, Alaska, Montana and New Hampshire.",
+					"The template includes file-based routing, server rendering, TanStack Query integration, Paraglide localization, theme switching, reusable UI components, and localized MDX pages.",
 					"",
-					"Address records or postal-area data may correspond to real places, while contact profiles and some address details are simulated. Results are not verified identities and are not guaranteed to exist or be deliverable. Do not use them for actual deliveries, identity verification, official registrations or tax filings. A generated address does not establish residence or eligibility for any tax exemption. The tax-free label refers to the absence of a statewide general sales tax, not exemption from every tax.",
-					"",
-					"Generated results are not saved as a server-side address history. The site is available in English, Japanese and Simplified Chinese. The following links point to existing web pages, including their usage explanations and FAQs.",
+					"It supports English, Japanese, and Simplified Chinese. Adapt the example content, site configuration, and integrations to your project. Privacy and terms pages are starting points for customization by the website operator.",
 					"",
 					...locales.flatMap((locale) => [
 						`## ${languageNames[locale]} pages`,

@@ -62,6 +62,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.3.0(react@19.3.0)
+      simple-flakeid:
+        specifier: ^0.0.5
+        version: 0.0.5
       tailwind-merge:
         specifier: ^3.7.0
         version: 3.7.0
@@ -78,6 +81,9 @@ importers:
       '@biomejs/biome':
         specifier: 2.4.5
         version: 2.4.5
+      '@inlang/cli':
+        specifier: ^3.4.0
+        version: 3.4.0
       '@inlang/paraglide-js':
         specifier: ^2.27.0
         version: 2.27.0(typescript@6.0.3)(vite@8.3.4(@types/node@22.20.5)(jiti@2.7.0))
@@ -353,6 +359,11 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
+  '@inlang/cli@3.4.0':
+    resolution: {integrity: sha512-Xz9rshYJNTtEdap5fEGeg6TcLGHHREBqkS4ssYRZO2dc9IDkSngYubXweQnWu+6EwsfLniZlWAKqsG+9c1bMDQ==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   '@inlang/paraglide-js@2.27.0':
     resolution: {integrity: sha512-KAAwRbg/h3oi2D4nB0cUCKG2ntOLpcSOmwwjm+SL2a316NhdypXWGeElJenCwK2piPz7vQTn7yOYOwCjqIEP5g==}
@@ -1628,6 +1639,11 @@ packages:
   esast-util-from-js@2.0.1:
     resolution: {integrity: sha512-8Ja+rNJ0Lt56Pcf3TAmpBZjmx8ZcK5Ts4cAzIOjsjevg9oSXJnl6SUQ2EevU8tv3h6ZLWmoKL5H4fgWvdvfETw==}
 
+  esbuild-wasm@0.19.12:
+    resolution: {integrity: sha512-Zmc4hk6FibJZBcTx5/8K/4jT3/oG1vkGTEeKJUQFCUQKimD6Q7+adp/bdVQyYJFolMKaXkQnVZdV4O5ZaTYmyQ==}
+    engines: {node: '>=12'}
+    hasBin: true
+
   escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
     engines: {node: '>=6'}
@@ -2240,6 +2256,9 @@ packages:
     resolution: {integrity: sha512-PcByqNyT/38F2kDNi006HAMRJaULuBzq/FOsw3qdZvX/GA9W/jamDaRskgHjubHiftXK5sIFxLNkvrXUwcof6Q==}
     engines: {node: '>= 0.4'}
 
+  simple-flakeid@0.0.5:
+    resolution: {integrity: sha512-CR40AmHCBAFra1KWp2G3YSgwYmbzEI51ksRkNZDhzYm2v0Jbup9xtwdRhE6GhstLJoz15t3bqFYmi6yeA1wjLw==}
+
   solid-js@1.9.17:
     resolution: {integrity: sha512-4GAmLOWPfNV8H9Jfn2LSFTpNEG6jiOKPiwd5lnLGQtehHaX6l3TOLzJqQ7mqwB/3k1Yy3zyumFVopmc/tm34ow==}
 
@@ -2849,6 +2868,11 @@ snapshots:
       react-dom: 19.3.0(react@19.3.0)
 
   '@floating-ui/utils@0.2.12': {}
+
+  '@inlang/cli@3.4.0':
+    dependencies:
+      '@inlang/sdk': 4.0.0
+      esbuild-wasm: 0.19.12
 
   '@inlang/paraglide-js@2.27.0(typescript@6.0.3)(vite@8.3.4(@types/node@22.20.5)(jiti@2.7.0))':
     dependencies:
@@ -4005,6 +4029,8 @@ snapshots:
       esast-util-from-estree: 2.0.0
       vfile-message: 4.0.3
 
+  esbuild-wasm@0.19.12: {}
+
   escalade@3.2.0: {}
 
   esprima@4.0.1: {}
@@ -4886,6 +4912,8 @@ snapshots:
   seroval@1.6.9: {}
 
   shell-quote@1.12.0: {}
+
+  simple-flakeid@0.0.5: {}
 
   solid-js@1.9.17:
     dependencies:

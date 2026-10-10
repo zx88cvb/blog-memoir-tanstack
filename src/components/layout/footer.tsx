@@ -56,14 +56,14 @@ export function Footer({
 													href={item.href}
 													target="_blank"
 													rel="noopener noreferrer"
-													className="inline-flex min-h-8 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+													className="inline-flex min-h-8 items-center text-sm text-highlight transition-colors hover:underline underline-offset-4"
 												>
 													{item.label}
 												</a>
 											) : (
 												<Link
 													href={item.href}
-													className="inline-flex min-h-8 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+													className="inline-flex min-h-8 items-center text-sm text-highlight transition-colors hover:underline underline-offset-4"
 												>
 													{item.label}
 												</Link>
@@ -83,9 +83,7 @@ export function Footer({
 				</div>
 
 				{socials && (
-					<div className="mt-8 flex items-center gap-5">
-						{socials}
-					</div>
+					<div className="mt-8 flex items-center gap-5">{socials}</div>
 				)}
 
 				<div className="mt-6 flex flex-col gap-3 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between">

@@ -4,24 +4,24 @@
 
 :root {
   color-scheme: light;
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --surface: #ffffff;
-  --panel: rgb(255 255 255 / 85%);
-  --inset: rgb(241 245 249 / 70%);
-  --muted: #e2e8f0;
-  --muted-foreground: #475569;
-  --subtle-foreground: #64748b;
-  --border: #e2e8f0;
-  --control-border: #cbd5e1;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --primary-foreground: #ffffff;
-  --highlight: #4338ca;
-  --focus: #6366f1;
-  --glow-one: rgb(99 102 241 / 8%);
-  --glow-two: rgb(147 51 234 / 5%);
-  --panel-shadow: 0 24px 64px -24px rgb(49 46 129 / 16%);
+  --background: #FAFAF7;
+  --foreground: #17231E;
+  --surface: #FFFFFF;
+  --panel: rgb(255 255 255 / 90%);
+  --inset: #F0F4EF;
+  --muted: #E8EEEA;
+  --muted-foreground: #52635C;
+  --subtle-foreground: #52635C;
+  --border: #DDE5DF;
+  --control-border: #A7B9B2;
+  --primary: #0F766E;
+  --primary-hover: #115E59;
+  --primary-foreground: #FFFFFF;
+  --highlight: #0F766E;
+  --focus: #0F766E;
+  --brand-light: #99F6E4;
+  --brand-amber: #FBBF24;
+  --panel-shadow: 0 24px 64px -24px rgb(15 118 110 / 12%);
   --ring: var(--focus);
   --popover: var(--surface);
   --popover-foreground: var(--foreground);
@@ -31,23 +31,21 @@
 
 .dark {
   color-scheme: dark;
-  --background: #020617;
-  --foreground: #f1f5f9;
-  --surface: #0f172a;
-  --panel: rgb(15 23 42 / 80%);
-  --inset: rgb(2 6 23 / 40%);
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --subtle-foreground: #94a3b8;
-  --border: rgb(51 65 85 / 60%);
-  --control-border: rgb(71 85 105 / 80%);
-  --primary: #4f46e5;
-  --primary-hover: #6366f1;
-  --highlight: #a5b4fc;
-  --focus: #818cf8;
-  --glow-one: rgb(79 70 229 / 20%);
-  --glow-two: rgb(147 51 234 / 15%);
-  --panel-shadow: 0 25px 50px -12px rgb(30 27 75 / 25%);
+  --background: #111816;
+  --foreground: #EDF5F0;
+  --surface: #18221E;
+  --panel: rgb(24 34 30 / 90%);
+  --inset: #131D18;
+  --muted: #24332C;
+  --muted-foreground: #A7B9B2;
+  --subtle-foreground: #A7B9B2;
+  --border: #304139;
+  --control-border: #52635C;
+  --primary: #0F766E;
+  --primary-hover: #115E59;
+  --highlight: #2DD4BF;
+  --focus: #2DD4BF;
+  --panel-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
 }
 
 @theme inline {
@@ -73,6 +71,8 @@
   --color-control-border: var(--control-border);
   --color-primary-hover: var(--primary-hover);
   --color-highlight: var(--highlight);
+  --color-brand-light: var(--brand-light);
+  --color-brand-amber: var(--brand-amber);
   --shadow-panel: var(--panel-shadow);
 }
 
@@ -91,7 +91,7 @@
   }
   button, a { -webkit-tap-highlight-color: transparent; }
   button, select { font: inherit; }
-  ::selection { background: #6366f1; color: #fff; }
+  ::selection { background: var(--highlight); color: var(--background); }
 }
 
 

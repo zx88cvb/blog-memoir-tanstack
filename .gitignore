@@ -4,6 +4,7 @@ dist
 dist-ssr
 *.local
 .env
+.env.prod
 .nitro
 .tanstack
 .wrangler
@@ -11,3 +12,25 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
+
+# Generated translations and Inlang cache
+src/paraglide/
+project.inlang/cache/
+
+# editors (keep .cursor/skills — cross-agent symlink to .claude/skills)
+.idea
+.vscode
+.cursor/*
+!.cursor/skills
+
+# npm (project uses pnpm)
+package-lock.json
+
+# Runtime image uploads (no-storage local fallback)
+/public/uploads/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*

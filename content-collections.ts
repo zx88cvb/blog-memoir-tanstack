@@ -1,13 +1,28 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 import { compileMarkdown } from "./scripts/markdown";
-import { postSchema } from "./scripts/post-schema";
 
 const posts = defineCollection({
 	name: "posts",
 	directory: "content/blog",
 	include: "**/*.md",
-	schema: postSchema,
+	schema: z.object({
+		title: z.string().min(1),
+		date: z.iso.date(),
+		updated: z.iso.date().optional(),
+		description: z.string().optional(),
+		excerpt: z.string().optional(),
+		tags: z.array(z.string()).default([]),
+		categories: z.array(z.string()).default([]),
+		author: z.string().default("Hayden Bi"),
+		image: z.string().optional(),
+		published: z.boolean().default(true),
+		content: z.string(),
+	})
+	.refine((post) => !post.updated || post.updated >= post.date, {
+		message: "updated must not be earlier than date",
+		path: ["updated"],
+	}),
 	transform: async (post, context) => ({
 		...post,
 		slug: post._meta.filePath.replace(/\.md$/, ""),

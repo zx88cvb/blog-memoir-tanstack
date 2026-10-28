@@ -57,7 +57,7 @@ published: true
 - `src/routes/api/search.ts`：`/api/search` 的参数和响应入口。
 - robots、llms、Manifest、sitemap 的生成实现直接放在各自的根路由文件；`src/routes/feed[.]xml.ts` 保留 RSS 业务模块的响应入口，所有公开地址不变。
 - `src/modules/*/service.ts`：各模块业务入口。post 将文章查询、匹配和 `createServerFn` 封装放在同一文件，使用 `createServerOnlyFn` 隔离 Content Collections 读取；`types.ts` 提供客户端展示类型。search 提供兼容的搜索结果映射。列表参数与 loader 仍在路由中声明。
-- `src/modules/feed/`：RSS 业务实现。modules 仅承载业务代码和 API 调用。
+- `src/modules/feed/`：通过 `feed` 包生成 RSS 2.0，保留文章 GUID、发布时间和频道维护日期；空订阅的频道日期使用生成时间。modules 仅承载业务代码和 API 调用。
 - `src/modules/friends/`、`product/`：各自的数据筛选与排序；共享的 `SiteEntry` 类型位于 `src/types/site-entry.ts`。
 - 每个页面直接在路由的 `head` 中调用 `src/lib/seo.ts` 提供的通用 `pageHead`，组合元数据和结构化数据，不再建立页面专属 SEO 文件。`src/lib/xml.ts` 提供 XML 转义，`src/config/profile.ts` 保存头像图片配置。
 - `src/components/layout/blog-layout.tsx`：站点壳与侧栏联动动画；桌面侧栏、共享导航、移动 dialog、广告、页脚和返回顶部组件分别维护在 layout 目录。`src/config/navigation.ts` 集中维护主菜单、社交入口和页脚菜单。

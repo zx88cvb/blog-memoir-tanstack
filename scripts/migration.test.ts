@@ -9,7 +9,9 @@ import {
 	allCategories,
 	allPosts,
 } from "../.content-collections/generated/index.js";
+import { m } from "../src/paraglide/messages.js";
 import { loadPostService } from "./load-post-service.ts";
+import { rssItems, rssText } from "./rss-elements.ts";
 
 const { filterPosts } = await loadPostService();
 
@@ -326,6 +328,57 @@ test("sitemap, feed, discovery and verification files remain available", async (
 	const llms = await page("/llms.txt");
 	assert.equal((sitemap.match(/<url>/g) ?? []).length, published.length + 4);
 	assert.equal((feed.match(/<item>/g) ?? []).length, published.length);
+	const channel = feed.split("<item>")[0];
+	assert.equal(
+		rssText(channel, "title"),
+		m["feed.title"]({}, { locale: "zh-cn" }),
+	);
+	assert.equal(rssText(channel, "link"), `${canonicalOrigin}/`);
+	assert.equal(
+		rssText(channel, "description"),
+		m["seo.home.description"]({}, { locale: "zh-cn" }),
+	);
+	assert.equal(rssText(channel, "language"), "zh-CN");
+	assert.match(
+		channel,
+		new RegExp(
+			`<atom:link[^>]*href="${canonicalOrigin.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/feed\\.xml"[^>]*rel="self"[^>]*type="application/rss\\+xml"`,
+		),
+	);
+	assert.ok(!feed.includes("<generator>"));
+	assert.ok(!feed.includes("<content:encoded>"));
+	const expectedPosts = filterPosts(allPosts);
+	const items = rssItems(feed);
+	assert.deepEqual(
+		items.map((item) => rssText(item, "guid")),
+		expectedPosts.map((post) => `/posts/${post.slug}`),
+	);
+	for (const [index, post] of expectedPosts.entries()) {
+		const item = items[index];
+		assert.equal(rssText(item, "title"), post.title);
+		assert.equal(
+			rssText(item, "link"),
+			`${canonicalOrigin}/posts/${post.slug}`,
+		);
+		assert.match(item, /<guid isPermaLink="false">/);
+		assert.equal(
+			rssText(item, "description") ?? "",
+			post.excerpt ?? post.description ?? "",
+		);
+		assert.equal(
+			rssText(item, "pubDate"),
+			new Date(`${post.date}T00:00:00Z`).toUTCString(),
+		);
+	}
+	const latest = expectedPosts
+		.map((post) => post.updated ?? post.date)
+		.sort()
+		.at(-1);
+	if (latest)
+		assert.equal(
+			rssText(channel, "lastBuildDate"),
+			new Date(`${latest}T00:00:00Z`).toUTCString(),
+		);
 	for (const post of published) {
 		assert.ok(sitemap.includes(`${canonicalOrigin}/posts/${post.slug}`));
 		assert.ok(feed.includes(`${canonicalOrigin}/posts/${post.slug}`));
@@ -368,5 +421,7 @@ test("browser bundles contain neither article bodies nor build-time renderers", 
 		assert.ok(!code.includes("公司的后端开发，最后只剩下我一个人"), name);
 		assert.ok(!code.includes("@shikijs/markdown-it"), name);
 		assert.ok(!code.includes("onig.wasm"), name);
+		assert.ok(!code.includes("validator.w3.org/feed/docs/rss2.html"), name);
+		assert.ok(!code.includes("xml-js"), name);
 	}
 });

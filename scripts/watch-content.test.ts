@@ -4,6 +4,7 @@ import { readFile, unlink, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { rssItems, rssText } from "./rss-elements.ts";
 
 const probe = new URL(
 	"../content/blog/__migration-watch-probe.md",
@@ -13,8 +14,10 @@ const generated = new URL(
 	"../.content-collections/generated/allPosts.js",
 	import.meta.url,
 );
+const probeTitle = 'Migration watch probe & <RSS> "中文"';
+const probeExcerpt = '摘要 & <XML> "quotes" &amp; ]]> 尾段';
 const content = (marker: string, published = true, updated?: string) =>
-	`---\ntitle: "Migration watch probe"\ndate: "2026-10-01"\n${updated ? `updated: "${updated}"\n` : ""}tags: ["SearchTag"]\ncategories: ["Probe Category"]\npublished: ${published}\n---\n\n## 临时内容\n\n${marker} 正文特有词 MixedCase\n`;
+	`---\ntitle: ${JSON.stringify(probeTitle)}\nexcerpt: ${JSON.stringify(probeExcerpt)}\ndescription: "Fallback description"\ndate: "2026-10-01"\n${updated ? `updated: "${updated}"\n` : ""}tags: ["SearchTag"]\ncategories: ["Probe Category"]\npublished: ${published}\n---\n\n## 临时内容\n\n${marker} 正文特有词 MixedCase\n`;
 async function until(check: () => Promise<boolean>, label: string) {
 	for (let attempt = 0; attempt < 200; attempt++) {
 		if (await check()) return;
@@ -105,15 +108,17 @@ test("Vite picks up added, edited, unpublished and deleted content", {
 			/\/posts\/__migration-watch-probe<\/loc><lastmod>2026-10-27<\/lastmod>/,
 		);
 		const feed = await (await fetch(`${origin}/feed.xml`)).text();
-		assert.ok(
-			feed.includes(
-				"<lastBuildDate>Tue, 27 Oct 2026 00:00:00 GMT</lastBuildDate>",
-			),
+		assert.equal(
+			rssText(feed, "lastBuildDate"),
+			"Tue, 27 Oct 2026 00:00:00 GMT",
 		);
-		assert.match(
-			feed,
-			/<item><title>Migration watch probe<\/title>[\s\S]*?<pubDate>Thu, 01 Oct 2026 00:00:00 GMT<\/pubDate>/,
+		const item = rssItems(feed).find(
+			(entry) => rssText(entry, "guid") === "/posts/__migration-watch-probe",
 		);
+		assert.ok(item);
+		assert.equal(rssText(item, "title"), probeTitle);
+		assert.equal(rssText(item, "description"), probeExcerpt);
+		assert.equal(rssText(item, "pubDate"), "Thu, 01 Oct 2026 00:00:00 GMT");
 		for (const query of [
 			"正文特有词",
 			" mixedCASE ",
@@ -146,6 +151,11 @@ test("Vite picks up added, edited, unpublished and deleted content", {
 		assert.deepEqual(
 			await (await fetch(`${origin}/api/search?query=SearchTag`)).json(),
 			[],
+		);
+		assert.ok(
+			!(await (await fetch(`${origin}/feed.xml`)).text()).includes(
+				"/posts/__migration-watch-probe",
+			),
 		);
 		await unlink(probe);
 		created = false;

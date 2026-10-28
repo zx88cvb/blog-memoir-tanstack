@@ -29,8 +29,13 @@ package-lock.json
 # Runtime image uploads (no-storage local fallback)
 /public/uploads/
 
+# Add the new .content-collections directory to your project's .gitignore file — the files in this directory are always regenerated and can be safely ignored by Git.
+.content-collections
+
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+# The source Next.js repository is migration reference only.
+/bi-blog-memoir/

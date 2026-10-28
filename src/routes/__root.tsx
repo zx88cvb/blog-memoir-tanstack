@@ -1,133 +1,106 @@
+import type { QueryClient } from "@tanstack/react-query";
 import {
-  HeadContent,
-  Scripts,
-  createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { createServerFn } from '@tanstack/react-start';
-
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-
-import appCss from '../styles.css?url'
-
-import type { QueryClient } from '@tanstack/react-query'
-
-import { getLocale } from "@/paraglide/runtime.js";
-import { m } from "@/paraglide/messages.js";
-import { Link } from "@/core/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
-
+	createRootRouteWithContext,
+	HeadContent,
+	Link,
+	Outlet,
+	Scripts,
+} from "@tanstack/react-router";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
-import { SiteLayout } from "@/components/blocks/site-layout";
+import { BlogLayout } from "@/components/layout/blog-layout";
 import { themeInitScript } from "@/components/theme-toggle";
-import { envConfigs } from "@/config";
+import { getAnalytics } from "@/integrations/analytics/functions";
+import { m } from "@/paraglide/messages.js";
+import appCss from "../styles.css?url";
 
-interface MyRouterContext {
-  queryClient: QueryClient
-}
-
-// Expose only public analytics settings through the root loader.
-const getAnalyticsConfigs = createServerFn().handler(async () => {
-  const configs = envConfigs;
-  return {
-    gaId: configs.google_analytics_id?.trim() || '',
-    adsenseCode: configs.adsense_code?.trim() || '',
-  };
-});
-
-export const Route = createRootRouteWithContext<MyRouterContext>()({
-  loader: () => getAnalyticsConfigs(),
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'TanStack Start Starter',
-      },
-    ],
-    links: [
-      {
-        rel: 'icon',
-        href: '/favicon.ico',
-        type: 'image/x-icon',
-        sizes: '16x16 32x32 48x48 64x64',
-      },
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
-  shellComponent: RootDocument,
-  notFoundComponent: NotFound,
-})
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+	{
+		loader: () => getAnalytics(),
+		head: () => ({
+			meta: [
+				{ charSet: "utf-8" },
+				{ name: "viewport", content: "width=device-width, initial-scale=1" },
+				{ title: m["seo.home.title"]() },
+				{ name: "IndexNow", content: "963011ef5f7746e2b680d9492f292702" },
+			],
+			links: [
+				{ rel: "stylesheet", href: appCss },
+				{ rel: "icon", href: "/favicon.ico" },
+				{ rel: "shortcut icon", href: "/favicon-32x32.png" },
+				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+				{ rel: "manifest", href: "/manifest.webmanifest" },
+				{
+					rel: "alternate",
+					type: "application/rss+xml",
+					title: m["seo.home.title"](),
+					href: "/feed.xml",
+				},
+			],
+		}),
+		shellComponent: RootDocument,
+		component: RootComponent,
+		notFoundComponent: NotFound,
+		errorComponent: ({ reset }) => (
+			<div className="page-container py-24 text-center">
+				<h1 className="text-3xl font-serif">{m["error.title"]()}</h1>
+				<button type="button" className="mt-6 underline" onClick={reset}>
+					{m["error.retry"]()}
+				</button>
+			</div>
+		),
+	},
+);
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { gaId } = Route.useLoaderData();
-  return (
-    <html lang={getLocale()} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <HeadContent />
-        {import.meta.env.PROD && (
-					<GoogleAnalytics measurementId={gaId} />
-				)}
-      </head>
-      <body>
-        <SiteLayout>{children}</SiteLayout>
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            TanStackQueryDevtools,
-          ]}
-        />
-        <Scripts />
-      </body>
-    </html>
-  )
+	return (
+		<html lang="zh-CN" suppressHydrationWarning>
+			<head>
+				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: Static theme bootstrap is generated from validated configuration. */}
+				<script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+				<HeadContent />
+			</head>
+			<body>
+				{children}
+				<Scripts />
+			</body>
+		</html>
+	);
 }
 
-/**
- * 404 page
- */
-function NotFound() {
-	const title = m["not_found.title"]();
-	const description = m["not_found.description"]();
-
+function RootComponent() {
+	const { gaId } = Route.useLoaderData();
 	return (
 		<>
-			<title>{`${title} | ${envConfigs.app_name}`}</title>
-			<meta name="description" content={description} />
+			{import.meta.env.PROD && <GoogleAnalytics measurementId={gaId} />}
+			<BlogLayout>
+				<Outlet />
+			</BlogLayout>
+		</>
+	);
+}
+
+export function NotFound() {
+	return (
+		<div className="page-container flex min-h-[70svh] flex-col items-center justify-center text-center">
+			<title>{m["seo.not_found.title"]()}</title>
 			<meta name="robots" content="noindex" />
-			<main
-				id="main-content"
-				className="mx-auto flex min-h-[60svh] max-w-2xl flex-col items-center justify-center px-6 py-16 text-center"
-			>
-				<p className="text-6xl font-semibold tracking-tight text-muted-foreground sm:text-8xl">
-					404
+			<h1 className="select-none font-serif text-9xl font-medium text-primary/20">
+				404
+			</h1>
+			<div className="relative -mt-12 space-y-6">
+				<h2 className="font-serif text-4xl font-medium text-primary">
+					{m["not_found.title"]()}
+				</h2>
+				<p className="mx-auto max-w-md text-lg leading-relaxed text-muted-foreground">
+					{m["not_found.description"]()}
 				</p>
-				<h1 className="mt-6 text-2xl font-semibold tracking-tight sm:text-3xl">
-					{title}
-				</h1>
-				<p className="mt-4 max-w-lg text-sm leading-7 text-muted-foreground sm:text-base">
-					{description}
-				</p>
-				<Link href="/" className={buttonVariants({ className: "mt-8", size: "lg" })}>
+				<Link
+					to="/"
+					className="inline-flex min-h-10 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+				>
 					{m["not_found.back_home"]()}
 				</Link>
-			</main>
-		</>
+			</div>
+		</div>
 	);
 }

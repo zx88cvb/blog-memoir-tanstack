@@ -1,12 +1,13 @@
-import { Hero } from "@/components/blocks/hero";
-import { HomeFaq } from "@/components/blocks/home-faq";
+import { PostList } from "@/components/blog/post-list";
+import type { PostListData } from "@/modules/post/types";
+import { HomeHero } from "./home-hero";
 
-/** 首页只负责区块顺序与主内容锚点；翻译和请求由 blocks 管理。 */
-export function HomePage() {
+/** Compose home sections; the layout owns the main landmark and content anchor. */
+export function HomePage({ data }: { data: PostListData }) {
 	return (
-		<main id="main-content" className="flex flex-col gap-8 sm:gap-12">
-			<Hero />
-			<HomeFaq />
-		</main>
+		<>
+			<HomeHero />
+			<PostList data={data} />
+		</>
 	);
 }

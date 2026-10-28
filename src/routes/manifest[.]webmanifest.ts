@@ -1,48 +1,44 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { envConfigs } from '@/config';
+import { createFileRoute } from "@tanstack/react-router";
+import { m } from "@/paraglide/messages.js";
 
-export const Route = createFileRoute('/manifest.webmanifest')({
-  server: {
-    handlers: {
-      GET: () => {
-        const manifest = {
-          id: '/',
-          name: envConfigs.app_name,
-          short_name: envConfigs.app_name,
-          description: envConfigs.app_description,
-          lang: 'en',
-          start_url: '/',
-          scope: '/',
-          display: 'standalone',
-          background_color: '',
-          theme_color: '',
-          icons: [
-            {
-              src: '/icons/icon-192.png',
-              sizes: '192x192',
-              type: 'image/png',
-              purpose: 'any',
-            },
-            {
-              src: '/icons/icon-512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any',
-            },
-            // {
-            //   src: '/icons/icon-maskable-512.png',
-            //   sizes: '512x512',
-            //   type: 'image/png',
-            //   purpose: 'maskable',
-            // },
-          ],
-        };
-        return new Response(JSON.stringify(manifest), {
-          headers: {
-            'content-type': 'application/manifest+json; charset=utf-8',
-          },
-        });
-      },
-    },
-  },
+export const Route = createFileRoute("/manifest.webmanifest")({
+	server: {
+		handlers: {
+			GET: () => {
+				return Response.json(
+					{
+						id: "/",
+						name: m["manifest.name"](),
+						short_name: m["manifest.name"](),
+						description: m["manifest.description"](),
+						lang: "zh-CN",
+						start_url: "/",
+						scope: "/",
+						display: "standalone",
+						background_color: "#f4f2f0",
+						theme_color: "#f4f2f0",
+						icons: [
+							{
+								src: "/android-chrome-192x192.png",
+								sizes: "192x192",
+								type: "image/png",
+								purpose: "maskable",
+							},
+							{
+								src: "/android-chrome-512x512.png",
+								sizes: "512x512",
+								type: "image/png",
+								purpose: "maskable",
+							},
+						],
+					},
+					{
+						headers: {
+							"Content-Type": "application/manifest+json; charset=utf-8",
+						},
+					},
+				);
+			},
+		},
+	},
 });

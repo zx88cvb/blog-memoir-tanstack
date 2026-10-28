@@ -1,0 +1,177 @@
+{
+  "friends": [
+    {
+      "id": "2",
+      "name": "Domainsexplore",
+      "url": "https://domainsexplore.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "域名查询和ip定位",
+      "avatar": "https://dhuqkmqv7zzml403.public.blob.vercel-storage.com/image/friends/domainsexplore.com.png",
+      "status": "active",
+      "tags": [
+        "域名",
+        "IP"
+      ],
+      "addedDate": "2025-08-08",
+      "order": 10
+    },
+    {
+      "id": "3",
+      "name": "GamebeanPlay",
+      "url": "https://gamebeanplay.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "每日小游戏",
+      "avatar": "https://dhuqkmqv7zzml403.public.blob.vercel-storage.com/image/friends/gamebeanplay_logo.png",
+      "status": "active",
+      "tags": [
+        "游戏"
+      ],
+      "addedDate": "2025-08-21",
+      "order": 9
+    },
+    {
+      "id": "4",
+      "name": "X(Twitter)视频下载工具",
+      "url": "https://x-twitter-downloader.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "X(Twitter)视频下载工具",
+      "avatar": "https://x-twitter-downloader.com/favicon.ico",
+      "status": "active",
+      "tags": [
+        "X",
+        "Twitter",
+        "视频",
+        "下载"
+      ],
+      "addedDate": "2025-08-28",
+      "order": 7
+    },
+    {
+      "id": "5",
+      "name": "Pinterest视频下载工具",
+      "url": "https://pinterestool.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "Pinterest视频下载工具",
+      "avatar": "https://pinterestool.com/favicon.ico",
+      "status": "active",
+      "tags": [
+        "Pinterest",
+        "视频",
+        "下载"
+      ],
+      "addedDate": "2025-09-20",
+      "order": 8
+    },
+    {
+      "id": "7",
+      "name": "Bluesky视频下载工具",
+      "url": "https://bskytool.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "Bluesky视频下载工具",
+      "avatar": "https://bskytool.com/favicon.ico",
+      "status": "active",
+      "tags": [
+        "Bluesky",
+        "视频",
+        "下载"
+      ],
+      "addedDate": "2025-10-27",
+      "order": 7
+    },
+    {
+      "id": "8",
+      "name": "UrltoMedia",
+      "url": "https://urltomedia.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "任意URL生成截图或滚动视频",
+      "avatar": "https://urltomedia.com/favicon.ico",
+      "status": "passive",
+      "tags": [
+        "URL",
+        "视频",
+        "截图",
+        "下载"
+      ],
+      "addedDate": "2025-11-26",
+      "order": 5
+    },
+    {
+      "id": "9",
+      "name": "OG Image Hub",
+      "url": "https://ogimagehub.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "免费 OG Image 生成器",
+      "avatar": "https://ogimagehub.com/logo.png",
+      "status": "active",
+      "tags": [
+        "OG Image",
+        "图片",
+        "生成"
+      ],
+      "addedDate": "2026-01-26",
+      "order": 4
+    },
+    {
+      "id": "10",
+      "name": "Pixalice",
+      "url": "https://pixalice.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "Pixalice在线生成高质量AI图片和视频",
+      "avatar": "https://pixalice.com/logo.png",
+      "status": "active",
+      "tags": [
+        "AI",
+        "图片",
+        "视频",
+        "生成"
+      ],
+      "addedDate": "2026-02-27",
+      "order": 3
+    },
+    {
+      "id": "11",
+      "name": "Mydirs",
+      "url": "https://mydirs.com?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "Mydirs 导航站",
+      "avatar": "https://mydirs.com/logo.png",
+      "status": "active",
+      "tags": [
+        "导航站",
+        "外链"
+      ],
+      "addedDate": "2026-03-19",
+      "order": 3
+    },
+    {
+      "id": "12",
+      "name": "Toolaunch",
+      "url": "https://toolaunch.app?utm_source=haydenbi.com&utm_medium=link&utm_campaign=friendlink",
+      "description": "Toolaunch.app 导航站 - 最佳工具和产品发布目录",
+      "avatar": "https://toolaunch.app/logo.png",
+      "status": "active",
+      "tags": [
+        "导航站",
+        "外链"
+      ],
+      "addedDate": "2026-06-21",
+      "order": 3
+    }
+  ],
+  "statistics": {
+    "totalFriends": 6,
+    "activeFriends": 6,
+    "inactiveFriends": 0,
+    "categories": 7
+  },
+  "settings": {
+    "displayMode": "grid",
+    "sortBy": "order",
+    "showStatus": true,
+    "showTags": true,
+    "showDescription": true
+  },
+  "applicationInfo": {
+    "title": "友情链接申请",
+    "description": "欢迎技术博主申请友情链接，一起交流学习！",
+    "requirements": [
+      "技术相关的个人博客或网站",
+      "内容原创，更新频率较好",
+      "网站访问正常，加载速度良好",
+      "内容健康向上，无违法违规信息"
+    ],
+    "applicationMethod": "请通过邮件联系：zx88cvb@gmail.com",
+    "responseTime": "一般会在3-5个工作日内回复"
+  }
+}

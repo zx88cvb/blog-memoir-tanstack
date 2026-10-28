@@ -1,69 +1,70 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-import { envConfigs } from "@/config";
 import { absoluteSiteUrl } from "@/lib/seo";
-import { type Locale, locales, localizeHref } from "@/paraglide/runtime.js";
-
-const languageNames = {
-	en: "English",
-	ja: "Japanese",
-	"zh-cn": "Simplified Chinese",
-} as const satisfies Record<Locale, string>;
-
-const pages = [
-	{
-		path: "/",
-		name: "TanStack Template",
-		description: "A web application template built with TanStack Start, React, and TypeScript.",
-	},
-	{
-		path: "/about",
-		name: "About",
-		description: "The template's routing, data fetching, localization, themes, and customization options.",
-	},
-	{
-		path: "/privacy",
-		name: "Privacy policy",
-		description: "Example privacy content for the website operator to adapt to actual data practices.",
-	},
-	{
-		path: "/terms",
-		name: "Terms of service",
-		description: "Example terms for the website operator to adapt to the deployed service.",
-	},
-] as const;
+import { getAllPosts } from "@/modules/post/service";
+import { m } from "@/paraglide/messages.js";
 
 export const Route = createFileRoute("/llms.txt")({
 	server: {
 		handlers: {
-			GET: ({ request }) => {
-				const requestOrigin = new URL(request.url).origin;
-				const body = [
-					`# ${envConfigs.app_name}`,
-					"",
-					"> A web application template built with TanStack Start, React, and TypeScript.",
-					"",
-					"The template includes file-based routing, server rendering, TanStack Query integration, Paraglide localization, theme switching, reusable UI components, and localized MDX pages.",
-					"",
-					"It supports English, Japanese, and Simplified Chinese. Adapt the example content, site configuration, and integrations to your project. Privacy and terms pages are starting points for customization by the website operator.",
-					"",
-					...locales.flatMap((locale) => [
-						`## ${languageNames[locale]} pages`,
+			GET: () => {
+				const line = (text: string) => text.replace(/\s+/g, " ").trim();
+				const link = (name: string, path: string, description: string) =>
+					`- [${line(name).replace(/([\\[\]])/g, "\\$1")}](${absoluteSiteUrl(path)}): ${line(description)}`;
+				return new Response(
+					[
+						`# ${m["seo.home.title"]()}`,
 						"",
-						...pages.map(({ path, name, description }) =>
-							`- [${name}](${absoluteSiteUrl(localizeHref(path, { locale }), requestOrigin)}): ${description}`,
+						m["llms.introduction"](),
+						"",
+						m["llms.guidance"](),
+						"",
+						m["llms.pages"](),
+						"",
+						link(m["llms.home.name"](), "/", m["llms.home.description"]()),
+						link(
+							m["llms.about.name"](),
+							"/about",
+							m["llms.about.description"](),
+						),
+						link(
+							m["llms.product.name"](),
+							"/product",
+							m["llms.product.description"](),
 						),
 						"",
-					]),
-					"## Optional",
-					"",
-					`- [Sitemap](${absoluteSiteUrl("/sitemap.xml", requestOrigin)}): Public page URLs and language alternatives.`,
-					`- [Robots](${absoluteSiteUrl("/robots.txt", requestOrigin)}): Crawling rules for this site.`,
-					"",
-				].join("\n");
-				return new Response(body, {
-					headers: { "Content-Type": "text/plain; charset=utf-8" },
-				});
+						m["llms.articles"](),
+						"",
+						...getAllPosts().map((post) =>
+							link(
+								post.title,
+								`/posts/${post.slug}`,
+								post.excerpt ??
+									post.description ??
+									m["llms.article_fallback"](),
+							),
+						),
+						"",
+						m["llms.optional"](),
+						"",
+						link(
+							m["llms.friends.name"](),
+							"/friends",
+							m["llms.friends.description"](),
+						),
+						link(
+							m["llms.feed.name"](),
+							"/feed.xml",
+							m["llms.feed.description"](),
+						),
+						link(
+							m["llms.sitemap.name"](),
+							"/sitemap.xml",
+							m["llms.sitemap.description"](),
+						),
+						"",
+					].join("\n"),
+					{ headers: { "Content-Type": "text/plain; charset=utf-8" } },
+				);
 			},
 		},
 	},

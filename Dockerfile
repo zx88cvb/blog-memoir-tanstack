@@ -8,8 +8,7 @@ RUN apk add --no-cache libc6-compat && npm install -g pnpm@10
 
 WORKDIR /app
 
-# Copy package manifests, build config, and ALL dialect templates so the
-# postinstall hook can stamp out a matching schema.ts during install.
+# Install only the locked dependencies before copying application source.
 COPY package.json pnpm-lock.yaml* vite.config.ts ./
 
 RUN pnpm i --frozen-lockfile

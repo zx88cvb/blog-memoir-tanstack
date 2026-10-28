@@ -1,0 +1,28 @@
+{
+  "ads": [
+    {
+      "id": "pixalice",
+      "title": "Pixalice AI Image & Video Generator Online",
+      "href": "https://pixalice.com",
+      "imageSrc": "https://pixalice.com/og.png",
+      "imageAlt": "Pixalice AI Image & Video Generator Online",
+      "enabled": true
+    },
+    {
+      "id": "mydirs",
+      "title": "Mydirs - Submit your Product to 100+ directories",
+      "href": "https://mydirs.com",
+      "imageSrc": "https://mydirs.com/og.png",
+      "imageAlt": "Mydirs - Submit your Product to 100+ directories",
+      "enabled": false
+    },
+    {
+      "id": "toolaunch",
+      "title": "Toolaunch - The Best Tool & Product Launch Directory",
+      "href": "https://toolaunch.app",
+      "imageSrc": "https://toolaunch.app/og.png",
+      "imageAlt": "Toolaunch - The Best Tool & Product Launch Directory",
+      "enabled": true
+    }
+  ]
+}

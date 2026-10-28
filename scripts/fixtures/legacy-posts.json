@@ -1,0 +1,298 @@
+[
+  {
+    "slug": "2025-year-end-summary",
+    "title": "2025年终总结",
+    "date": "2026-01-14",
+    "excerpt": "2025 年，对我来说是一个明显的分水岭",
+    "image": "https://r2.haydenbi.com/cover/post/2025-year-end-summary.png",
+    "tags": [
+      "年终总结",
+      "日常"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#公司资金问题",
+      "#独立开发的起点",
+      "#从开发到做产品的人",
+      "#工作之外的生活",
+      "#写给-2026-年的几件事"
+    ]
+  },
+  {
+    "slug": "Docker-overlay2-clean",
+    "title": "Docker中overlay2磁盘占用爆满清理方案",
+    "date": "2025-12-05",
+    "excerpt": "Docker中overlay2磁盘占用爆满清理方案,检查磁盘空间和各容器占用空间",
+    "image": "https://r2.haydenbi.com/cover/post/docker-overlay2-clean.png",
+    "tags": [
+      "Docker",
+      "Linux",
+      "部署"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#检查磁盘空间和各容器占用空间",
+      "#检查磁盘空间情况",
+      "#检查容器的占用情况",
+      "#执行清理操作",
+      "#清理无用的images",
+      "#清理containers容器中的日志",
+      "#从根源限制docker日志大小一劳永逸的方法-推荐",
+      "#清理build-cache构建缓存",
+      "#总结"
+    ]
+  },
+  {
+    "slug": "Dokploy-install-deploy",
+    "title": "Dokploy安装和部署项目流程",
+    "date": "2025-09-10",
+    "excerpt": "Dokploy 是一个免费的、自托管的平台. 使用Dokploy的原因: 自带 Traefik，自动处理域名解析、HTTPS 证书（Let’s Encrypt 自动续期..",
+    "image": "https://r2.haydenbi.com/cover/post/land-o-lakes-inc-1w3tO5F8HYY-dokploy-install.png",
+    "tags": [
+      "Dokploy",
+      "前端开发",
+      "部署"
+    ],
+    "author": "Hayden Bi"
+  },
+  {
+    "slug": "MacOS26-ClashXPro-Cannot-Open",
+    "title": "升级MacOS26无法打开ClashX Pro解决办法",
+    "date": "2025-09-17",
+    "excerpt": "使用MacOS26系统打开ClashX Pro出现 You origin config has been renamed解决办法",
+    "image": "https://r2.haydenbi.com/cover/post/Ct1xSTSiaJsPf3n2aDyia8cZ390.png",
+    "tags": [
+      "Mac",
+      "IOS",
+      "Apple",
+      "VPN",
+      "Clash"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#升级macos26版本打开clashx-pro报错提示",
+      "#解决方法"
+    ]
+  },
+  {
+    "slug": "SpringAI-ollama-qwen3-error",
+    "title": "Spring AI使用ollamaModel和qwen3兼容问题because evalDuration is null错误解决",
+    "date": "2025-08-01",
+    "excerpt": "Spring AI使用ollamaModel和qwen3兼容问题because evalDuration is null错误解决详细办法",
+    "image": "https://r2.haydenbi.com/cover/post/springai-qwen.png",
+    "tags": [
+      "Spring AI",
+      "Java",
+      "后端",
+      "AI"
+    ],
+    "author": "Hayden Bi"
+  },
+  {
+    "slug": "mercury-register-in-2026",
+    "title": "2026 Mercury (水星银行) 开户完整教程",
+    "date": "2026-03-11",
+    "excerpt": "面向独立开发者和出海团队的 Mercury 开户教程，完整记录 2026 年申请流程，包括资料准备、表单填写、法定地址与真实地址区分、文件上传、审核流程与常见问题",
+    "image": "https://r2.haydenbi.com/cover/post/mercury-register-in-2026.png",
+    "tags": [
+      "Mercury",
+      "Stripe",
+      "注册公司",
+      "支付",
+      "出海"
+    ],
+    "author": "Hayden Bi"
+  },
+  {
+    "slug": "moltbot-install",
+    "title": "OpenClaw (原 Moltbot) 安装教程: 从 0 搭建本地 AI 助手",
+    "date": "2026-01-30",
+    "excerpt": "完整记录 OpenClaw (原 Moltbot) 的安装流程与模型授权、Telegram 机器人接入步骤，附常见问题解决方案",
+    "image": "https://r2.haydenbi.com/cover/post/moltbot-install.png",
+    "tags": [
+      "AI",
+      "Moltbot",
+      "OpenClaw",
+      "ChatGPT"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#前言",
+      "#前置条件",
+      "#服务器",
+      "#安装",
+      "#执行终端命令",
+      "#选择模型和授权",
+      "#选择聊天频道",
+      "#配置-skill",
+      "#telegram-机器人配对",
+      "#常见问题",
+      "#telegram-setmycommands-failed-httperror-network-request-for-setmycommands"
+    ]
+  },
+  {
+    "slug": "openclaw-gmail-setup",
+    "title": "OpenClaw (原 Moltbot) Gmail 集成教程：邮件自动化与每日摘要",
+    "date": "2026-02-03",
+    "excerpt": "手把手完成 OpenClaw Gmail 授权与配置，支持重点邮件筛选、摘要生成与定时推送",
+    "image": "https://r2.haydenbi.com/cover/post/openclaw-gmail-setup.png",
+    "tags": [
+      "AI",
+      "Moltbot",
+      "OpenClaw",
+      "Gmail"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#前言",
+      "#前置条件",
+      "#集成",
+      "#确定方案",
+      "#google-cloud-console-配置",
+      "#openclaw-配置",
+      "#每天按时总结",
+      "#实时邮件处理发布订阅可选这里不做演示",
+      "#总结"
+    ]
+  },
+  {
+    "slug": "openclaw-update",
+    "title": "OpenClaw 升级指南: 官方推荐方式与常见报错修复",
+    "date": "2026-02-04",
+    "excerpt": "整理 OpenClaw 升级的推荐方式、常见报错与处理思路，避免升级卡住或重复踩坑。",
+    "image": "https://r2.haydenbi.com/cover/post/openclaw-update.png",
+    "tags": [
+      "AI",
+      "Moltbot",
+      "OpenClaw",
+      "Update"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#前言",
+      "#升级",
+      "#常见问题",
+      "#通过-openclaw-update-升级出现-updating-via-package-manager-错误"
+    ]
+  },
+  {
+    "slug": "spring-festival-guangzhou-trip",
+    "title": "春节之旅 - 广州篇",
+    "date": "2026-02-24",
+    "excerpt": "春节九天假期的广州城市漫游：在人潮里看塔、逛老街、走沙面，也记录了计划外的取舍。",
+    "image": "https://r2.haydenbi.com/cover/post/spring-festival-guangzhou-trip.webp",
+    "tags": [
+      "旅行",
+      "广州"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#前言",
+      "#路线",
+      "#北京路步行街",
+      "#大佛寺",
+      "#广州塔",
+      "#沙面",
+      "#沙面教堂",
+      "#海心沙公园",
+      "#总结"
+    ]
+  },
+  {
+    "slug": "stripe-atlas-to-register-us-company-in-2026",
+    "title": "2026 Stripe Atlas 注册美国公司实操指南",
+    "date": "2026-03-07",
+    "excerpt": "从 0 到 1 走完 Stripe Atlas 注册美国公司的核心流程，覆盖 LLC 选择、资料填写、支付风控和 EIN 申请进度",
+    "image": "https://r2.haydenbi.com/cover/post/stripe-atlas-to-register-us-company-in-2026.png",
+    "tags": [
+      "Stripe",
+      "注册公司",
+      "支付",
+      "美国公司",
+      "出海"
+    ],
+    "author": "Hayden Bi"
+  },
+  {
+    "slug": "stripe-radar-rules",
+    "title": "Stripe Radar 防盗刷实操：2027 定价变化与规则配置指南",
+    "description": "面向独立开发者和出海团队，介绍 Stripe Radar 的工作原理、2027 年套餐与计费变化，并分享 3DS、风险拦截和人工审核规则的配置思路。",
+    "author": "Hayden Bi",
+    "date": "2026-08-13",
+    "tags": [
+      "Stripe"
+    ],
+    "image": "https://r2.haydenbi.com/cover/post/stripe-radar-rules.webp",
+    "tocUrls": [
+      "#前言",
+      "#stripe-radar-是如何工作的",
+      "#2027-年-radar-定价变化",
+      "#进入-radar-rules",
+      "#配置规则前需要了解什么",
+      "#request-3ds-规则",
+      "#block-规则",
+      "#review-规则",
+      "#总结",
+      "#官方参考资料"
+    ]
+  },
+  {
+    "slug": "ultra-mobile-paygo-top-up",
+    "title": "Ultra Mobile PayGo 充值教程",
+    "description": "Ultra Mobile PayGo 充值教程",
+    "author": "Hayden Bi",
+    "date": "2026-01-15",
+    "tags": [
+      "Ultra Mobile",
+      "PayGo",
+      "充值",
+      "海外",
+      "公司注册"
+    ],
+    "image": "https://r2.haydenbi.com/cover/post/ultra-mobile-paygo-top-up.png",
+    "tocUrls": [
+      "#1-前置条件",
+      "#2-下载ultra-mobile-app",
+      "#3-登录ultra-mobile-app",
+      "#31-绑定支付方式",
+      "#32-充值"
+    ]
+  },
+  {
+    "slug": "using-google-analytics-with-next.js",
+    "title": "NextJS接入Google Analytics方法",
+    "date": "2025-08-20",
+    "excerpt": "NextJS接入Google Analytics方法,首先安装@next/third-parties 执行 npm install @next/third-parties",
+    "image": "https://r2.haydenbi.com/cover/post/pexels-wolfgang-weiser-467045605-17928576%20(1).png",
+    "tags": [
+      "Next.js",
+      "前端开发",
+      "NodeJS",
+      "Google Analytics"
+    ],
+    "author": "Hayden Bi"
+  },
+  {
+    "slug": "vercel-deploy-multiple-project",
+    "title": "包含多个子项目集成一个项目部署Vercel方法",
+    "date": "2025-08-22",
+    "excerpt": "一个项目中包含多个子项目,子项目用到的框架不同.例如projectA用的React,Project B用的Vue, Project C用的原生HTML+CSS+JS。如何将多个项目合并成一个配置并且部署到Vercel..",
+    "image": "https://r2.haydenbi.com/cover/post/pexels-ananto-biswas-utshow-2156876079-34871769.png",
+    "tags": [
+      "Vercel",
+      "前端开发",
+      "部署"
+    ],
+    "author": "Hayden Bi",
+    "tocUrls": [
+      "#1-起因",
+      "#2-项目结构",
+      "#21-project-a项目下的packagejson",
+      "#22-project-b项目下的packagejson",
+      "#23-project-c项目下的packagejson",
+      "#24-project-d-纯htmlcssjs",
+      "#3-verceljson创建和配置",
+      "#4-提交并部署"
+    ]
+  }
+]

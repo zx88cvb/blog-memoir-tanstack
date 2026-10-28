@@ -1,169 +1,122 @@
-# TanStack Template
+# Hayden Bi Blog
 
-**[English](README.md)** | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+从 `bi-blog-memoir` 迁移的个人博客，采用 React 19、TanStack Start/Router、Vite、Nitro 和 Tailwind CSS 4。内容使用 Content Collections + markdown-it，在构建阶段生成 HTML、目录和搜索文本；没有 Next.js、Fumadocs 或 MDX 运行时。
 
-A web application template built with **TanStack Start, React, and TypeScript**. Use it as a starting point for a multilingual website, product landing page, or small application. The example homepage combines Hero and FAQ blocks, with light and dark themes, MDX content pages, and basic SEO included.
+## 开发
 
-![TanStack Template social preview](public/og.png)
+需要 Node.js 22.18+ 和 pnpm 10。
 
-## Features
-
-- **File-based routing and server rendering**: TanStack Start + TanStack Router, with page loaders, server handlers, and client navigation.
-- **Data fetching**: TanStack Query integrated with router SSR. Each server request gets a separate QueryClient; the browser reuses an instance.
-- **Localization**: Paraglide / Inlang, with English, Japanese, Simplified Chinese, a language menu, and localized links.
-- **Themes and components**: Tailwind CSS 4, Base UI, and Lucide icons. A teal palette with light, dark, and system initial theme settings.
-- **Content and SEO**: About, privacy, and terms MDX pages in three languages; titles, descriptions, Open Graph, canonical URLs, hreflang, and JSON-LD.
-- **Site endpoints**: `/robots.txt`, `/sitemap.xml`, `/llms.txt`, and `/manifest.webmanifest`.
-- **Build and checks**: Vite, Nitro Node server output, and Biome.
-
-The template does not currently include an account system, database, or payment flow. S3/R2 adapters and general utilities are available for optional use; they do not constitute an upload API. GA4 runs only in production when an ID is configured. Advertising components require explicit integration.
-
-## Getting started
-
-Use **Node.js 22.12+ (22.x)** and **pnpm 10**, matching the Dockerfile.
-
-```bash
+```sh
 pnpm install --frozen-lockfile
 cp env.example .env.local
 pnpm dev
 ```
 
-Open `http://localhost:3000`. The project uses `pnpm-lock.yaml`; keep the same package manager throughout development.
+默认开发地址为 `http://localhost:3000`。公开配置通过 `VITE_*` 在构建时注入；Google Analytics ID 在服务端运行时读取，仅生产环境启用。
 
-### Site configuration
+## 内容维护
 
-Adjust public configuration in `.env.local`:
+- `content/blog/*.md`：文章；`content/category/*.md`：分类。
+- `content/data/`：友链、产品与侧栏广告。保留原 JSON 结构及排序；产品历史数据的数组名为 `friends`。
+- `content-collections.ts`：集合、字段校验和编译转换；`scripts/markdown.ts`：HTML、目录和搜索文本生成。
+- `.content-collections/`、`src/paraglide/`、`src/routeTree.gen.ts`：生成文件，请修改其源配置。
 
-```dotenv
-VITE_APP_URL=http://localhost:3000
-VITE_APP_NAME=TanStack Template
-VITE_APP_DESCRIPTION=A web application template built with TanStack Start, React, and TypeScript.
-VITE_DEFAULT_LOCALE=en
-VITE_DEFAULT_THEME=light
+文章示例：
+
+```md
+---
+title: "文章标题"
+date: "2026-10-28"
+updated: "2026-10-28"
+description: "搜索与分享摘要"
+author: "Hayden Bi"
+tags: ["AI"]
+image: "https://example.com/cover.webp"
+published: true
+---
+
+## 前言
+
+正文。
 ```
 
-`src/config/index.ts` centralizes configuration and defaults. `VITE_*` variables can enter the client build, so never use them for secrets. GA4 uses the server variable `GOOGLE_ANALYTICS_ID`; leave it empty to disable tracking.
+`title`、`date` 必填；`excerpt` 优先于 `description` 作为展示摘要。`published` 默认 `true`，设置 `false` 后不会出现在页面、详情、搜索、RSS 或 sitemap。以 `.txt` 结尾的草稿不收录。
 
-The custom loader in the Vite configuration reads `.env.local` → `.env.{NODE_ENV}` → `.env`. Existing nonempty process variables take priority. Do not commit credentials in environment files; use the ignored `.env.local` for local settings. Restart development after changing public configuration and rebuild before publishing.
+`updated` 可选，使用 `YYYY-MM-DD`，不能早于 `date`。仅在实质修改文章时手动填写真实更新日期；不要按构建时间或文件修改时间自动生成，也无需为历史文章补填。填写后文章页展示最后更新时间，并同步到 JSON-LD、Open Graph、sitemap 与 RSS 频道维护时间；文章排序及 RSS `pubDate` 仍使用原始发布日期。
 
-## Architecture
+首页搜索与 `/api/search` 共用服务端匹配逻辑，覆盖标题、摘要、描述、标签、分类和正文纯文本，去除查询首尾空白、忽略大小写，按发布日期倒序。正文和全文搜索源数据不会打入浏览器包。
 
-| Layer | Technology and responsibility |
-| --- | --- |
-| Pages and routing | TanStack Start / Router: file routes, loaders, server rendering, navigation |
-| Data | TanStack Query: request caching and SSR integration |
-| Presentation | React 19 + TypeScript: page composition, feature blocks, shared components |
-| Styling | Tailwind CSS 4 + Base UI: theme tokens, interaction primitives, responsive layouts |
-| Localization | Paraglide / Inlang: message compilation, language cookies, localized URLs |
-| Content | MDX: localized static pages and metadata |
-| Build and runtime | Vite 8 + Nitro: client builds and Node server output |
-| Code quality | Strict TypeScript checks + Biome formatting, import organization, and linting |
+文件名决定原始 slug，只去除末尾 `.md`。请勿修改已发布文件名的大小写或内部句点。文章支持标准 Markdown、表格、删除线和 HTML 图片布局；HTML 使用 `class`，不使用 JSX 的 `className` 或 React 组件。代码高亮在构建时完成，未知语言显示为普通代码块。
 
-Requests first pass through the Paraglide middleware in `src/server.ts`, then reach TanStack Start. `src/router.tsx` connects the generated route tree, URL localization, and QueryClient. `__root.tsx` supplies the HTML document and site layout. Pages compose blocks, blocks handle copy and feature logic, and reusable presentation components receive content through props.
+修改、增加或删除内容后，Vite 插件自动重新生成集合。生产环境无需保留内容源码或编译工具。
 
-## Project structure
+## 目录与职责
 
-```text
-src/
-├── routes/                 # File routes, root layout, and site endpoints
-│   └── (marketing)/(legal)/ # About, privacy, terms, and shared MDX loading
-├── components/
-│   ├── home/               # Homepage composition
-│   ├── blocks/             # Hero, homepage FAQ, and site layout blocks
-│   ├── faq/                # Locale-independent FAQ presentation
-│   ├── layout/             # Header, footer, and mobile navigation
-│   ├── shared/             # Shared components such as Logo
-│   ├── ui/                 # Button, Accordion, Select, and other primitives
-│   └── analytics/          # GA4 and advertising components
-├── config/                 # Environment settings, locale display, SEO locale metadata
-├── core/
-│   ├── i18n/               # Localized navigation and dynamic message utilities
-│   └── storage/            # S3 / R2 adapters and shared storage interfaces
-├── integrations/           # TanStack Query provider and devtools
-├── lib/                    # SEO, sitemap, request, cache, and other utilities
-├── paraglide/              # Generated runtime and messages; do not edit manually
-├── router.tsx              # Router and Query SSR integration
-├── server.ts               # Server entry and locale middleware
-├── routeTree.gen.ts        # Generated route tree
-└── styles.css              # Tailwind entry, theme tokens, and global styles
-content/pages/              # MDX content and meta in three languages
-messages/                   # en.json, ja.json, zh-cn.json translation sources
-project.inlang/             # Locales, message format, and Paraglide configuration
-app/paraglide/              # Additional Paraglide output configured in Vite
-public/                     # Logo, social image, favicon, flags, and static assets
+- `src/routes/index.tsx`：首页；`src/routes/__root.tsx`：根壳。
+- `src/routes/(marketing)/{页面}/index.tsx`：关于、博客、友链、产品；文章详情位于 `posts/$slug/index.tsx`。目录分组不改变公开 URL。
+- `src/routes/api/search.ts`：`/api/search` 的参数和响应入口。
+- robots、llms、Manifest、sitemap 的生成实现直接放在各自的根路由文件；`src/routes/feed[.]xml.ts` 保留 RSS 业务模块的响应入口，所有公开地址不变。
+- `src/modules/*/service.ts`：各模块业务入口。post 将文章查询、匹配和 `createServerFn` 封装放在同一文件，使用 `createServerOnlyFn` 隔离 Content Collections 读取；`types.ts` 提供客户端展示类型。search 提供兼容的搜索结果映射。列表参数与 loader 仍在路由中声明。
+- `src/modules/feed/`：RSS 业务实现。modules 仅承载业务代码和 API 调用。
+- `src/modules/friends/`、`product/`：各自的数据筛选与排序；共享的 `SiteEntry` 类型位于 `src/types/site-entry.ts`。
+- 每个页面直接在路由的 `head` 中调用 `src/lib/seo.ts` 提供的通用 `pageHead`，组合元数据和结构化数据，不再建立页面专属 SEO 文件。`src/lib/xml.ts` 提供 XML 转义，`src/config/profile.ts` 保存头像图片配置。
+- `src/components/layout/blog-layout.tsx`：站点壳与侧栏联动动画；桌面侧栏、共享导航、移动 dialog、广告、页脚和返回顶部组件分别维护在 layout 目录。`src/config/navigation.ts` 集中维护主菜单、社交入口和页脚菜单。
+- `src/components/home/home-page.tsx`：组合 HomeHero 与 PostList，首页与 `/blog` 共用，主内容 main 由布局提供。
+- `src/components/blog/post-pagination.tsx`：Prev/Next、最多七个页码/省略号项目；小屏展示当前页/总页数。`share-menu.tsx` 保留原博客 Share2 图标、紧凑菜单与复制回退。友链仍使用通用 CopyButton。
+- `src/styles.css`：主题与语义样式 token、正文与评论样式、侧栏和主题按钮交互。
+- `src/integrations/analytics/functions.ts`：Analytics 服务端集成，GA 配置仍由服务端读取。
+
+静态 meta title、description、默认 SEO、404、RSS、Manifest 和 llms 文案通过 `messages/zh-cn.json` 维护，并在请求或渲染时调用 Paraglide。英文、日文资源保持相同键，目前复用现有文案。文章元数据仍使用 frontmatter，友链与产品内容仍使用业务 JSON；不再使用 `site-data.ts` 混合文案和数据。
+
+## 路由与兼容
+
+- `/`：文章列表；`category`、`q`、`page` 支持组合，每页九篇。
+- `/posts/{slug}`：文章；原有大小写、含句点 URL 和目录锚点保留。
+- `/about`、`/friends`、`/product`：关于、友链和产品。
+- `/blog`：列表兼容入口，canonical 指向 `/`；所有筛选、分页链接指向首页。
+- `/api/search?query=关键词`：已发布文章全文搜索，返回兼容的结果数组；空查询返回 `[]`。
+- `/feed.xml`、`/sitemap.xml`、`/robots.txt`、`/llms.txt`、`/manifest.webmanifest`：订阅和发现端点。
+
+页面默认中文，原有中英文混排文案保留。Hero 标签与描述、分页、分享和文章空状态使用 Paraglide 中英日资源，在组件渲染时读取；Hero 英文标题保持各语言相同。生产页面只启用中文，不展示语言选择器，不发布带语言前缀的页面。无结果时可重置搜索、分类、页码和未提交的输入，并保留滚动位置。模板的隐私和条款占位页已移除。
+
+Waline 使用原始评论路径 `/posts/{slug}` 和 `/friends`。继续配置原 Waline 服务即可显示历史评论，无需重新导入评论。
+
+## 验证
+
+```sh
+pnpm check
+pnpm exec tsc --noEmit
+pnpm check:i18n
+pnpm test:content
+pnpm test:watch
+VITE_APP_URL=https://haydenbi.com pnpm build
+pnpm test:migration
 ```
 
-At the root, `vite.config.ts` configures plugins and development, `tsconfig.json` defines type checking and the `@/` and `#/` source aliases, `biome.json` defines code conventions, and `Dockerfile` provides a Node deployment example. `AGENTS.md` is the contributor guide; `.impeccable.md` records design conventions. `.output/`, `.tanstack/`, `.nitro/`, and Inlang caches are generated artifacts.
+`pnpm check` 的迁移基线为 38 个既有错误；清理未使用的旧 Header 后，目前剩余 37 个错误、26 条警告和 5 条提示，均属于原有诊断。全局样式已开启 Tailwind CSS 语法支持并纳入 Biome 检查，本次修改文件检查通过。错误分类、文件与范围说明见 [Biome 基线](docs/migration/biome-baseline.md)。不要对全库执行自动修复来消除这些差异。
 
-## Commands
+`test:content` 验证中文及重复标题锚点、表格、HTML 图片、代码高亮、更新时间校验、共享搜索规则、大页数分页、剪贴板复制回退及显式 locale 的中英日文案与参数。`test:watch` 验证 Vite 下文章新增、编辑、撤稿和删除后的 SSR 更新，以及更新时间在正文、SEO、sitemap、RSS 中的输出和首页/API 搜索一致性。`test:migration` 自动启动临时 Nitro 服务并关闭，对旧文章及完整 SEO 标签基线、SSR、canonical、404、查询参数、搜索、RSS、sitemap、验证文件和浏览器包隔离执行检查。原生 Node 测试通过 `scripts/load-post-service.ts` 解析 Content Collections 的构建别名。必须先构建，且测试的 `VITE_APP_URL` 应与构建时一致；未指定时按 `https://haydenbi.com` 验收。回归服务从系统临时目录启动，验证生产产物不依赖源码工作目录。
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm dev` | Start development on port 3000 |
-| `pnpm build` | Build the client and Nitro server |
-| `pnpm preview` | Preview the production build locally |
-| `pnpm generate-routes` | Regenerate the route tree |
-| `pnpm i18n:generate` | Compile translated messages and runtime |
-| `pnpm check:i18n` | Check the localization project |
-| `pnpm check` | Run Biome checks without rewriting files |
-| `pnpm lint` | Run Biome lint checks |
-| `pnpm format --write` | Apply Biome formatting |
-| `pnpm exec tsc --noEmit` | Check TypeScript types |
+## 构建与部署
 
-`pnpm machine-translate` invokes Inlang machine translation. Review its service configuration first and check the results manually. No automated test framework or coverage threshold is currently configured. Unused-message checks may be incomplete for dynamic references and MDX; inspect actual references before deleting keys.
+本次迁移不更改域名。正式站点使用 `https://haydenbi.com`。不要将用于开发的 localhost canonical 部署到生产。
 
-## Customization
-
-### Add a page
-
-Add a route file under `src/routes/` and put reusable content in components. Route groups such as `(marketing)` do not appear in URLs. `__root.tsx` defines the root layout; files prefixed with `-` can hold helpers excluded from routing. Do not edit `routeTree.gen.ts` manually.
-
-```tsx
-import { createFileRoute } from "@tanstack/react-router";
-
-export const Route = createFileRoute("/example")({
-  component: () => <main id="main-content">Example</main>,
-});
-```
-
-For internal navigation, prefer `Link` from `@/core/i18n/navigation` with a locale-free `href`, such as `/about`. English currently uses `/`, Japanese `/ja`, and Simplified Chinese `/zh-cn`.
-
-### Translations and MDX
-
-Update all three `messages/*.json` files with consistent keys, then run `pnpm i18n:generate`. Use static calls for known messages, such as `m["home.hero.title"]()`. Locales are configured in `project.inlang/settings.json`; URL strategies live in `project.inlang/paraglide.config.ts`. Application code uses `src/paraglide`; the extra `app/paraglide` output is not a translation source.
-
-MDX pages live under `content/pages/`: `about.mdx` for English, `about.ja.mdx` for Japanese, and `about.zh-cn.mdx` for Chinese. Each exports `meta` with `title`, `description`, and `updated_at`. New content pages also need a corresponding route; follow the existing pages and shared `staticPageRouteOptions`.
-
-### Themes and branding
-
-`src/styles.css` defines the palette: warm white `#FAFAF7` for light mode, `#111816` for dark backgrounds, `#0F766E` for primary buttons, and `#2DD4BF` for dark-mode emphasis. The theme toggle saves visitor preferences, which override `VITE_DEFAULT_THEME`.
-
-- `public/logo.png`: transparent header and footer logo, referenced directly by the shared Logo component.
-- `public/og.png`: default social image; keep it at **1200 × 630**, matching the SEO metadata.
-- `public/favicon.ico`: transparent browser icon derived from the current Logo, with 16, 32, 48, and 64px layers.
-- Application icons: replace them separately for your brand and verify manifest paths before publishing.
-- `src/lib/seo.ts`: shared page metadata; homepage titles and descriptions come from the `seo.home.*` translation keys.
-
-## Build and deployment
-
-```bash
-pnpm build
+```sh
+VITE_APP_URL=https://haydenbi.com pnpm build
 node .output/server/index.mjs
 ```
 
-The deployment directory is **`.output/`**, not `dist/`. Configure the running server through process variables such as `PORT` and `HOST`. Set the production site URL before building.
+`.env.local` 优先于 `.env.production` 和 `.env`；显式命令行环境变量优先。使用 Docker 时，通过构建参数传入公开配置，运行时通过环境变量传入 `GOOGLE_ANALYTICS_ID`。不要把秘密放进 `VITE_*`。
 
-You can also use the repository's multi-stage Dockerfile:
-
-```bash
-docker build -t tanstack-template .
-docker run --rm -p 3000:3000 --env-file .env.local tanstack-template
+```sh
+docker build --build-arg VITE_APP_URL=https://haydenbi.com -t haydenbi-blog .
+docker run --rm -p 3000:3000 -e GOOGLE_ANALYTICS_ID=G-EXAMPLE haydenbi-blog
 ```
 
-The Dockerfile uses Node 22, pnpm 10, and Nitro Node output. There is currently no `.dockerignore`; add exclusions before building an image to keep local environment files, Git data, and dependency directories out of the build context. Public configuration must still be determined at image build time.
+上线前检查真实域名的文章、分享图、评论服务和站点验证文件；上线后观察 404、服务器错误、Search Console 抓取及 canonical。切换流量前保留原站部署作为回退。
 
-## Publishing and contributing
+`bi-blog-memoir/` 仅作为迁移参考，不参与新项目类型检查、lint 或 Docker 构建。旧文章验收基线保存在 `scripts/fixtures/legacy-posts.json`。
 
-Run type checks, Biome checks, and a production build after changes. Manually verify affected pages in all three languages, mobile layouts, both themes, and keyboard navigation. Biome uses tabs and double quotes; use PascalCase component names and kebab-case filenames.
+Router Core 在直接依赖及 pnpm overrides 中统一固定为 `1.171.37`，确保 Nitro 与浏览器使用相同的路由状态编码。升级 TanStack 时需同步调整这两处，并复验生产首屏 hydration。
 
-Before publishing, replace sample content and complete operator details, privacy policies, and terms. Check the production domain, social image, sitemap, manifest icons, and `ads.txt` against your deployment. Keep commits focused and describe changes and validation in PRs; include screenshots for visual changes. See [AGENTS.md](AGENTS.md) for further conventions.
+迁移验证结果与界面截图见 [迁移验收报告](docs/migration/README.md)。

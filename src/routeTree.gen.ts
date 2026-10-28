@@ -10,18 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FeedDotxmlRouteImport } from './routes/feed[.]xml'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]webmanifest'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as marketinglegalRouteRouteImport } from './routes/(marketing)/(legal)/route'
-import { Route as marketinglegalAboutIndexRouteImport } from './routes/(marketing)/(legal)/about/index'
-import { Route as marketinglegalPrivacyIndexRouteImport } from './routes/(marketing)/(legal)/privacy/index'
-import { Route as marketinglegalTermsIndexRouteImport } from './routes/(marketing)/(legal)/terms/index'
+import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as marketingAboutIndexRouteImport } from './routes/(marketing)/about/index'
+import { Route as marketingBlogIndexRouteImport } from './routes/(marketing)/blog/index'
+import { Route as marketingFriendsIndexRouteImport } from './routes/(marketing)/friends/index'
+import { Route as marketingProductIndexRouteImport } from './routes/(marketing)/product/index'
+import { Route as marketingPostsSlugIndexRouteImport } from './routes/(marketing)/posts/$slug/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedDotxmlRoute = FeedDotxmlRouteImport.update({
+  id: '/feed.xml',
+  path: '/feed.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
@@ -44,102 +52,138 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const marketinglegalRouteRoute = marketinglegalRouteRouteImport.update({
-  id: '/(marketing)/(legal)',
+const ApiSearchRoute = ApiSearchRouteImport.update({
+  id: '/api/search',
+  path: '/api/search',
   getParentRoute: () => rootRouteImport,
 } as any)
-const marketinglegalAboutIndexRoute =
-  marketinglegalAboutIndexRouteImport.update({
-    id: '/about/',
-    path: '/about/',
-    getParentRoute: () => marketinglegalRouteRoute,
-  } as any)
-const marketinglegalPrivacyIndexRoute =
-  marketinglegalPrivacyIndexRouteImport.update({
-    id: '/privacy/',
-    path: '/privacy/',
-    getParentRoute: () => marketinglegalRouteRoute,
-  } as any)
-const marketinglegalTermsIndexRoute =
-  marketinglegalTermsIndexRouteImport.update({
-    id: '/terms/',
-    path: '/terms/',
-    getParentRoute: () => marketinglegalRouteRoute,
-  } as any)
+const marketingAboutIndexRoute = marketingAboutIndexRouteImport.update({
+  id: '/(marketing)/about/',
+  path: '/about/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const marketingBlogIndexRoute = marketingBlogIndexRouteImport.update({
+  id: '/(marketing)/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const marketingFriendsIndexRoute = marketingFriendsIndexRouteImport.update({
+  id: '/(marketing)/friends/',
+  path: '/friends/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const marketingProductIndexRoute = marketingProductIndexRouteImport.update({
+  id: '/(marketing)/product/',
+  path: '/product/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const marketingPostsSlugIndexRoute = marketingPostsSlugIndexRouteImport.update({
+  id: '/(marketing)/posts/$slug/',
+  path: '/posts/$slug/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/about/': typeof marketinglegalAboutIndexRoute
-  '/privacy/': typeof marketinglegalPrivacyIndexRoute
-  '/terms/': typeof marketinglegalTermsIndexRoute
+  '/api/search': typeof ApiSearchRoute
+  '/about/': typeof marketingAboutIndexRoute
+  '/blog/': typeof marketingBlogIndexRoute
+  '/friends/': typeof marketingFriendsIndexRoute
+  '/product/': typeof marketingProductIndexRoute
+  '/posts/$slug/': typeof marketingPostsSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/about': typeof marketinglegalAboutIndexRoute
-  '/privacy': typeof marketinglegalPrivacyIndexRoute
-  '/terms': typeof marketinglegalTermsIndexRoute
+  '/api/search': typeof ApiSearchRoute
+  '/about': typeof marketingAboutIndexRoute
+  '/blog': typeof marketingBlogIndexRoute
+  '/friends': typeof marketingFriendsIndexRoute
+  '/product': typeof marketingProductIndexRoute
+  '/posts/$slug': typeof marketingPostsSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/(marketing)/(legal)': typeof marketinglegalRouteRouteWithChildren
-  '/(marketing)/(legal)/about/': typeof marketinglegalAboutIndexRoute
-  '/(marketing)/(legal)/privacy/': typeof marketinglegalPrivacyIndexRoute
-  '/(marketing)/(legal)/terms/': typeof marketinglegalTermsIndexRoute
+  '/api/search': typeof ApiSearchRoute
+  '/(marketing)/about/': typeof marketingAboutIndexRoute
+  '/(marketing)/blog/': typeof marketingBlogIndexRoute
+  '/(marketing)/friends/': typeof marketingFriendsIndexRoute
+  '/(marketing)/product/': typeof marketingProductIndexRoute
+  '/(marketing)/posts/$slug/': typeof marketingPostsSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/feed.xml'
     | '/llms.txt'
     | '/manifest.webmanifest'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/api/search'
     | '/about/'
-    | '/privacy/'
-    | '/terms/'
+    | '/blog/'
+    | '/friends/'
+    | '/product/'
+    | '/posts/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/feed.xml'
     | '/llms.txt'
     | '/manifest.webmanifest'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/api/search'
     | '/about'
-    | '/privacy'
-    | '/terms'
+    | '/blog'
+    | '/friends'
+    | '/product'
+    | '/posts/$slug'
   id:
     | '__root__'
     | '/'
+    | '/feed.xml'
     | '/llms.txt'
     | '/manifest.webmanifest'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/(marketing)/(legal)'
-    | '/(marketing)/(legal)/about/'
-    | '/(marketing)/(legal)/privacy/'
-    | '/(marketing)/(legal)/terms/'
+    | '/api/search'
+    | '/(marketing)/about/'
+    | '/(marketing)/blog/'
+    | '/(marketing)/friends/'
+    | '/(marketing)/product/'
+    | '/(marketing)/posts/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FeedDotxmlRoute: typeof FeedDotxmlRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  marketinglegalRouteRoute: typeof marketinglegalRouteRouteWithChildren
+  ApiSearchRoute: typeof ApiSearchRoute
+  marketingAboutIndexRoute: typeof marketingAboutIndexRoute
+  marketingBlogIndexRoute: typeof marketingBlogIndexRoute
+  marketingFriendsIndexRoute: typeof marketingFriendsIndexRoute
+  marketingProductIndexRoute: typeof marketingProductIndexRoute
+  marketingPostsSlugIndexRoute: typeof marketingPostsSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -149,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feed.xml': {
+      id: '/feed.xml'
+      path: '/feed.xml'
+      fullPath: '/feed.xml'
+      preLoaderRoute: typeof FeedDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms.txt': {
@@ -179,59 +230,64 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(marketing)/(legal)': {
-      id: '/(marketing)/(legal)'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof marketinglegalRouteRouteImport
+    '/api/search': {
+      id: '/api/search'
+      path: '/api/search'
+      fullPath: '/api/search'
+      preLoaderRoute: typeof ApiSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(marketing)/(legal)/about/': {
-      id: '/(marketing)/(legal)/about/'
+    '/(marketing)/about/': {
+      id: '/(marketing)/about/'
       path: '/about'
       fullPath: '/about/'
-      preLoaderRoute: typeof marketinglegalAboutIndexRouteImport
-      parentRoute: typeof marketinglegalRouteRoute
+      preLoaderRoute: typeof marketingAboutIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/(marketing)/(legal)/privacy/': {
-      id: '/(marketing)/(legal)/privacy/'
-      path: '/privacy'
-      fullPath: '/privacy/'
-      preLoaderRoute: typeof marketinglegalPrivacyIndexRouteImport
-      parentRoute: typeof marketinglegalRouteRoute
+    '/(marketing)/blog/': {
+      id: '/(marketing)/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof marketingBlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/(marketing)/(legal)/terms/': {
-      id: '/(marketing)/(legal)/terms/'
-      path: '/terms'
-      fullPath: '/terms/'
-      preLoaderRoute: typeof marketinglegalTermsIndexRouteImport
-      parentRoute: typeof marketinglegalRouteRoute
+    '/(marketing)/friends/': {
+      id: '/(marketing)/friends/'
+      path: '/friends'
+      fullPath: '/friends/'
+      preLoaderRoute: typeof marketingFriendsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(marketing)/product/': {
+      id: '/(marketing)/product/'
+      path: '/product'
+      fullPath: '/product/'
+      preLoaderRoute: typeof marketingProductIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(marketing)/posts/$slug/': {
+      id: '/(marketing)/posts/$slug/'
+      path: '/posts/$slug'
+      fullPath: '/posts/$slug/'
+      preLoaderRoute: typeof marketingPostsSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface marketinglegalRouteRouteChildren {
-  marketinglegalAboutIndexRoute: typeof marketinglegalAboutIndexRoute
-  marketinglegalPrivacyIndexRoute: typeof marketinglegalPrivacyIndexRoute
-  marketinglegalTermsIndexRoute: typeof marketinglegalTermsIndexRoute
-}
-
-const marketinglegalRouteRouteChildren: marketinglegalRouteRouteChildren = {
-  marketinglegalAboutIndexRoute: marketinglegalAboutIndexRoute,
-  marketinglegalPrivacyIndexRoute: marketinglegalPrivacyIndexRoute,
-  marketinglegalTermsIndexRoute: marketinglegalTermsIndexRoute,
-}
-
-const marketinglegalRouteRouteWithChildren =
-  marketinglegalRouteRoute._addFileChildren(marketinglegalRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FeedDotxmlRoute: FeedDotxmlRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  marketinglegalRouteRoute: marketinglegalRouteRouteWithChildren,
+  ApiSearchRoute: ApiSearchRoute,
+  marketingAboutIndexRoute: marketingAboutIndexRoute,
+  marketingBlogIndexRoute: marketingBlogIndexRoute,
+  marketingFriendsIndexRoute: marketingFriendsIndexRoute,
+  marketingProductIndexRoute: marketingProductIndexRoute,
+  marketingPostsSlugIndexRoute: marketingPostsSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

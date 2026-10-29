@@ -18,7 +18,8 @@
     "machine-translate": "inlang machine translate --project project.inlang",
     "test:migration": "node --experimental-strip-types --test scripts/migration.test.ts",
     "test:content": "node --experimental-strip-types --test scripts/markdown.test.ts scripts/post.test.ts scripts/pagination.test.ts scripts/clipboard.test.ts scripts/i18n.test.ts",
-    "test:watch": "node --experimental-strip-types --test scripts/watch-content.test.ts"
+    "test:watch": "node --experimental-strip-types --test scripts/watch-content.test.ts",
+    "test:env": "node --experimental-strip-types --test scripts/env.test.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

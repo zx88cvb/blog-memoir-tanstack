@@ -41,9 +41,6 @@ export const envConfigs: Record<string, string> = {
 	storage_public_domain: procEnv.STORAGE_PUBLIC_DOMAIN ?? "",
 	inline_image_max_kb: procEnv.INLINE_IMAGE_MAX_KB ?? "2048",
 
-	// Locale (public)
-	locale: publicEnv("VITE_DEFAULT_LOCALE") ?? "zh-cn",
-
 	// redis
 	redis_host: procEnv.REDIS_HOST ?? "",
 	redis_port: procEnv.REDIS_PORT ?? "",

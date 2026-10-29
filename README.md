@@ -81,6 +81,8 @@ published: true
 
 页面默认中文，原有中英文混排文案保留。Hero 标签与描述、分页、分享和文章空状态使用 Paraglide 中英日资源，在组件渲染时读取；Hero 英文标题保持各语言相同。生产页面只启用中文，不展示语言选择器，不发布带语言前缀的页面。无结果时可重置搜索、分类、页码和未提交的输入，并保留滚动位置。模板的隐私和条款占位页已移除。
 
+默认语言的唯一来源是 `project.inlang/settings.json` 中的 `baseLocale: "zh-cn"`；Vite 插件与 Paraglide 配置使用 `strategy: ["baseLocale"]`。修改这些源配置后重新生成翻译，不要直接修改生成目录。
+
 Waline 使用原始评论路径 `/posts/{slug}` 和 `/friends`。继续配置原 Waline 服务即可显示历史评论，无需重新导入评论。
 
 ## 验证
@@ -90,6 +92,7 @@ pnpm check
 pnpm exec tsc --noEmit
 pnpm check:i18n
 pnpm test:content
+pnpm test:env
 pnpm test:watch
 VITE_APP_URL=https://haydenbi.com pnpm build
 pnpm test:migration
@@ -108,7 +111,9 @@ VITE_APP_URL=https://haydenbi.com pnpm build
 node .output/server/index.mjs
 ```
 
-`.env.local` 优先于 `.env.production` 和 `.env`；显式命令行环境变量优先。使用 Docker 时，通过构建参数传入公开配置，运行时通过环境变量传入 `GOOGLE_ANALYTICS_ID`。不要把秘密放进 `VITE_*`。
+公开的 `VITE_*` 变量由 Vite 原生加载，优先级为进程变量 > `.env.{mode}.local` > `.env.local` > `.env.{mode}` > `.env`。开发时修改环境文件会触发 Vite 重载；生产修改后必须重新构建。`VITE_DEFAULT_THEME` 支持 `light`、`dark`、`system`，已有的用户主题选择优先于配置默认值。
+
+服务端变量仍由 `loadEnvFiles()` 加载，优先级为进程变量 > `.env.local` > `.env.{NODE_ENV}` > `.env`；文件中的 `VITE_*` 不会写入 `process.env`，避免重载时旧值覆盖新配置。`pnpm test:env` 验证这两条加载链路与主题配置更新。使用 Docker 时，在构建阶段提供公开配置，运行时通过环境变量传入 `GOOGLE_ANALYTICS_ID`。不要把秘密放进 `VITE_*`。
 
 ```sh
 docker build --build-arg VITE_APP_URL=https://haydenbi.com -t haydenbi-blog .

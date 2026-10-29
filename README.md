@@ -98,7 +98,7 @@ VITE_APP_URL=https://haydenbi.com pnpm build
 pnpm test:migration
 ```
 
-`pnpm check` 的迁移基线为 38 个既有错误；清理未使用的旧 Header 后，目前剩余 37 个错误、26 条警告和 5 条提示，均属于原有诊断。全局样式已开启 Tailwind CSS 语法支持并纳入 Biome 检查，本次修改文件检查通过。错误分类、文件与范围说明见 [Biome 基线](docs/migration/biome-baseline.md)。不要对全库执行自动修复来消除这些差异。
+`pnpm check` 的迁移基线为 38 个既有错误；清理未使用的旧 Header 并规范环境加载文件的 Node 导入后，目前剩余 37 个错误、26 条警告和 3 条提示，均属于原有诊断。全局样式已开启 Tailwind CSS 语法支持并纳入 Biome 检查，本次修改文件检查通过。错误分类、文件与范围说明见 [Biome 基线](docs/migration/biome-baseline.md)。不要对全库执行自动修复来消除这些差异。
 
 `test:content` 验证中文及重复标题锚点、表格、HTML 图片、代码高亮、更新时间校验、共享搜索规则、大页数分页、剪贴板复制回退及显式 locale 的中英日文案与参数。`test:watch` 验证 Vite 下文章新增、编辑、撤稿和删除后的 SSR 更新，以及更新时间在正文、SEO、sitemap、RSS 中的输出和首页/API 搜索一致性。`test:migration` 自动启动临时 Nitro 服务并关闭，对旧文章及完整 SEO 标签基线、SSR、canonical、404、查询参数、搜索、RSS、sitemap、验证文件和浏览器包隔离执行检查。原生 Node 测试通过 `scripts/load-post-service.ts` 解析 Content Collections 的构建别名。必须先构建，且测试的 `VITE_APP_URL` 应与构建时一致；未指定时按 `https://haydenbi.com` 验收。回归服务从系统临时目录启动，验证生产产物不依赖源码工作目录。
 

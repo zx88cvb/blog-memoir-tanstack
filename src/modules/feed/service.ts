@@ -13,6 +13,7 @@ export function buildFeed(): string {
 	const feed = new Feed({
 		title: m["feed.title"](),
 		link: absoluteSiteUrl("/"),
+		image: absoluteSiteUrl("/logo.png"),
 		description: m["seo.home.description"](),
 		language: "zh-CN",
 		feedLinks: { rss: absoluteSiteUrl("/feed.xml") },

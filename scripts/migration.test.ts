@@ -339,6 +339,11 @@ test("sitemap, feed, discovery and verification files remain available", async (
 		m["seo.home.description"]({}, { locale: "zh-cn" }),
 	);
 	assert.equal(rssText(channel, "language"), "zh-CN");
+	const image = channel.match(/<image>([\s\S]*?)<\/image>/)?.[1];
+	assert.ok(image, "RSS channel includes a logo");
+	assert.equal(rssText(image, "url"), `${canonicalOrigin}/logo.png`);
+	assert.equal(rssText(image, "title"), rssText(channel, "title"));
+	assert.equal(rssText(image, "link"), `${canonicalOrigin}/`);
 	assert.match(
 		channel,
 		new RegExp(

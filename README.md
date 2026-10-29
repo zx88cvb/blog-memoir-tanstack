@@ -63,11 +63,12 @@ pnpm dev
 
 - `VITE_APP_URL`：站点地址，用于 canonical、RSS 等绝对链接。
 - `VITE_DEFAULT_THEME`：默认主题，支持 `light`、`dark`、`system`，用户保存的选择优先。
-- `VITE_WALINE_SERVER_URL`：Waline 评论服务地址。
-- `VITE_STORE_PUBLIC_URL`：分享图片资源前缀，可选。
+- `WALINE_SERVER_URL`：Waline 评论服务地址，运行时读取，留空时隐藏评论。
 - `GOOGLE_ANALYTICS_ID`：服务端运行时读取，仅生产环境启用。
 
 `VITE_*` 为公开的构建时配置，生产修改后需重新构建，不要放入秘密信息。
+
+默认分享图为 `public/og.png`，替换图片后重新构建即可。Dokploy 中将评论地址配置为运行环境变量 `WALINE_SERVER_URL`，无需 Docker Build Args；首次部署新代码后，修改该地址只需重启容器。
 
 ## 部署
 
@@ -82,7 +83,9 @@ node .output/server/index.mjs
 
 ```sh
 docker build -t haydenbi-blog .
-docker run --rm -p 3000:3000 -e GOOGLE_ANALYTICS_ID=G-EXAMPLE haydenbi-blog
+docker run --rm -p 3000:3000 \
+  -e WALINE_SERVER_URL=https://example.com \
+  -e GOOGLE_ANALYTICS_ID=G-EXAMPLE haydenbi-blog
 ```
 
 迁移验证结果与界面截图见 [迁移验收报告](docs/migration/README.md)。

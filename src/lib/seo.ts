@@ -10,9 +10,7 @@ export function absoluteSiteUrl(path: string) {
 }
 
 export function shareImage() {
-	return envConfigs.store_public_url
-		? `${envConfigs.store_public_url.replace(/\/$/, "")}/share/og-image.png`
-		: "/logo.png";
+	return "/og.png";
 }
 
 type JsonLd = Record<string, unknown>;

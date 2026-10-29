@@ -6,16 +6,23 @@ import {
 	Outlet,
 	Scripts,
 } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { BlogLayout } from "@/components/layout/blog-layout";
 import { themeInitScript } from "@/components/theme-toggle";
-import { getAnalytics } from "@/integrations/analytics/functions";
+import { envConfigs } from "@/config";
 import { m } from "@/paraglide/messages.js";
 import appCss from "../styles.css?url";
 
+// Expose only public settings through the root loader.
+const getConfigs = createServerFn().handler(() => ({
+	gaId: envConfigs.google_analytics_id.trim(),
+	walineServerUrl: envConfigs.waline_server_url.trim(),
+}));
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 	{
-		loader: () => getAnalytics(),
+		loader: () => getConfigs(),
 		head: () => ({
 			meta: [
 				{ charSet: "utf-8" },

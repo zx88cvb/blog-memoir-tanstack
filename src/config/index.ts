@@ -19,10 +19,13 @@ export const envConfigs: Record<string, string> = {
 	app_logo: publicEnv("VITE_APP_LOGO") ?? "/logo.png",
 	// 默认主题可由公开环境变量覆盖；已保存的用户选择优先。
 	default_theme: publicEnv("VITE_DEFAULT_THEME") ?? "light",
-
-	waline_server_url: publicEnv("VITE_WALINE_SERVER_URL") ?? "",
 	twitter_site: publicEnv("VITE_TWITTER_SITE") ?? "@HaydenBi",
-	store_public_url: publicEnv("VITE_STORE_PUBLIC_URL") ?? "",
+
+	// s3 public url
+	store_public_url: procEnv.STORE_PUBLIC_URL ?? "",
+
+	// comment
+	waline_server_url: procEnv.WALINE_SERVER_URL ?? "",
 
 	// Analytics (public)
 	google_analytics_id: procEnv.GOOGLE_ANALYTICS_ID ?? "",

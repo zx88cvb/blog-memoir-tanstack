@@ -417,11 +417,13 @@ test("sitemap, feed, discovery and verification files remain available", async (
 	for (const path of [
 		"/favicon.ico",
 		"/logo.png",
+		"/og.png",
 		"/baidu_verify_codeva-BGSxepMVn0.html",
 		"/963011ef5f7746e2b680d9492f292702.txt",
 	])
 		assert.equal((await fetch(`${origin}${path}`)).status, 200);
 	for (const [path, type] of [
+		["/og.png", "image/png"],
 		["/feed.xml", "application/rss+xml"],
 		["/sitemap.xml", "application/xml"],
 		["/llms.txt", "text/plain"],
@@ -432,6 +434,34 @@ test("sitemap, feed, discovery and verification files remain available", async (
 				.get("content-type")
 				?.includes(type),
 		);
+});
+
+test("comments consume the public root loader URL and default share images are local", async () => {
+	const commentsEnabled = Boolean(process.env.WALINE_SERVER_URL?.trim());
+	for (const path of ["/friends", `/posts/${published[0].slug}`]) {
+		const response = await fetch(`${origin}${path}`);
+		assert.equal(response.status, 200);
+		const html = await response.text();
+		assert.equal(
+			/<section[^>]*class="[^"]*\bwaline\b/.test(html),
+			commentsEnabled,
+			path,
+		);
+		if (commentsEnabled)
+			assert.ok(html.includes(process.env.WALINE_SERVER_URL?.trim() ?? ""));
+		assert.ok(!html.includes('"storePublicUrl"'));
+	}
+	for (const path of ["/", "/blog", "/friends", "/product"]) {
+		const html = await (await fetch(`${origin}${path}`)).text();
+		assert.ok(
+			html.includes(`property="og:image" content="${canonicalOrigin}/og.png"`),
+			path,
+		);
+		assert.ok(
+			html.includes(`name="twitter:image" content="${canonicalOrigin}/og.png"`),
+			path,
+		);
+	}
 });
 
 test("browser bundles contain neither article bodies nor build-time renderers", async () => {

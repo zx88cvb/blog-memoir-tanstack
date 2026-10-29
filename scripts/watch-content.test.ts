@@ -119,6 +119,11 @@ test("Vite picks up added, edited, unpublished and deleted content", {
 		assert.equal(rssText(item, "title"), probeTitle);
 		assert.equal(rssText(item, "description"), probeExcerpt);
 		assert.equal(rssText(item, "pubDate"), "Thu, 01 Oct 2026 00:00:00 GMT");
+		assert.doesNotMatch(
+			item,
+			/<enclosure\b/,
+			"posts without a cover omit enclosure",
+		);
 		for (const query of [
 			"正文特有词",
 			" mixedCASE ",

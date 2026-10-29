@@ -374,6 +374,23 @@ test("sitemap, feed, discovery and verification files remain available", async (
 			rssText(item, "pubDate"),
 			new Date(`${post.date}T00:00:00Z`).toUTCString(),
 		);
+		const enclosures = item.match(/<enclosure\b[^>]*\/>/g) ?? [];
+		if (post.image) {
+			assert.equal(enclosures.length, 1, post.slug);
+			const enclosure = enclosures[0];
+			assert.equal(
+				enclosure.match(/\burl="([^"]*)"/)?.[1],
+				post.image.replaceAll("&", "&amp;"),
+			);
+			const extension = new URL(post.image).pathname.split(".").at(-1);
+			assert.equal(
+				enclosure.match(/\btype="([^"]*)"/)?.[1],
+				`image/${extension}`,
+			);
+			assert.match(enclosure, /\blength="0"/);
+		} else {
+			assert.equal(enclosures.length, 0, post.slug);
+		}
 	}
 	const latest = expectedPosts
 		.map((post) => post.updated ?? post.date)

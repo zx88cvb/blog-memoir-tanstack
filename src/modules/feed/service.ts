@@ -25,6 +25,7 @@ export function buildFeed(): string {
 			title: post.title,
 			link: absoluteSiteUrl(`/posts/${post.slug}`),
 			guid: `/posts/${post.slug}`,
+			image: post.image,
 			description: post.excerpt ?? post.description ?? "",
 			date: date(post.date),
 		});

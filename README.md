@@ -2,6 +2,8 @@
 
 从 `bi-blog-memoir` 迁移的个人博客，采用 React 19、TanStack Start/Router、Vite、Nitro 和 Tailwind CSS 4。内容使用 Content Collections + markdown-it，在构建阶段生成 HTML、目录和搜索文本；没有 Next.js、Fumadocs 或 MDX 运行时。
 
+![项目截图](https://i.imgur.com/s5dG4jM.png)
+
 ## 开发
 
 需要 Node.js 22.18+ 和 pnpm 10。
